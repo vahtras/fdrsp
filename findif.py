@@ -1,4 +1,5 @@
 import os
+import subprocess
 import math
 import multiprocessing
 #import dalinp
@@ -146,8 +147,17 @@ class RspCalc:
         molfile.write(self.mol)
         molfile.close()
 
-        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s > log 2>&1 " % (ncpu, dal, dal)
-        os.system(cmd)
+        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, dal, dal)
+        try:
+            with open('log', 'w') as log:
+                retval = subprocess.call(cmd, stdout=log, stderr=log, shell=True)
+            if retval == 0:
+                print "Dalton called OK"
+            else:
+                raise OSError(open('log').read())
+        except OSError, e:
+            print e
+            raise
 
         result = None
         if rsp_order > 0:
