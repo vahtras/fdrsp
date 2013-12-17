@@ -1,8 +1,0 @@
-#!/bin/bash
-funcfile=${1-availfun}
-#./gen_findif_lr.py XXQUADRU YDIPLEN $funcfile
-#./gen_findif_qr.py XXQUADRU YYQUADRU YDIPLEN $funcfile
-#./gen_findif_cr.py XXQUADRU YYQUADRU ZZQUADRU YDIPLEN $funcfile
-./gen_findif_all.py XXQUADRU YYQUADRU ZZQUADRU YDIPLEN $funcfile
-echo "HF" > hf_availfun
-cat $funcfile >> hf_availfun
