@@ -9,7 +9,9 @@ Welcome to Finite Difference Response Testing's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
+
+    overview
 
 
 
