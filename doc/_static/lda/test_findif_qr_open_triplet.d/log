@@ -1,0 +1,32 @@
+found /tmp and DALTON_TMPDIR set to /tmp
+
+   ***************************************** 
+   **** OUTPUT FROM DALTON SHELL SCRIPT **** 
+   ***************************************** 
+
+   DALTON release 2013.0
+
+   Invocation: /home/olav/dev/dalton/git/build/release.sanity/dalton -N 1 -d -t /tmp/ExpVal_lda lda
+
+   ons 18 dec+ 2013 13.59.+23 CET
+
+   Calculation: lda  (input files: lda.dal and lda.mol)
+   PID        : 22156
+   Input dir  : /tmp/fdrsp/test_findif_qr_open_triplet.d
+   Scratch dir: /tmp/ExpVal_lda/DALTON_scratch_olav/lda
+
+
+ DALTON: default work memory size used.            64000000
+
+ Work memory size (LMWORK+2):    64000002 =  488.28 megabytes; node   0
+
+   0: Directories for basis set searches:
+     /tmp/fdrsp/test_findif_qr_open_triplet.d:/home/olav/dev/dalton/git/build/release.sanity/basis
+Backup: renaming /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.tar.gz.0 to /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.tar.gz.1
+Backup: renaming /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.tar.gz to /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.tar.gz.0
+lda.tar.gz has been copied to /tmp/fdrsp/test_findif_qr_open_triplet.d
+Backup: renaming /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.out.0 to /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.out.1
+Backup: renaming /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.out to /tmp/fdrsp/test_findif_qr_open_triplet.d/lda.out.0
+
+   ons 18 dec+ 2013 13.59.+36 CET
+   ***************************************** 
