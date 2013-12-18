@@ -45,10 +45,10 @@ defines classes for performing response calculations
 
 ::
 
-    makehtml.py
+    makehtml.py 
 
 Collects resulting log files and presents results in a web format 
-`table <../../../test_findif.html>`_
+-> `test_findif.html <../../../test_findif.html>`_
 
 ::
 

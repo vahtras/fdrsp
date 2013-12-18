@@ -12,6 +12,9 @@ Contents:
     :maxdepth: 2
 
     overview
+    example
+    submitall
+    gen_findif_all
 
 
 
