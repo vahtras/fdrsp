@@ -29,7 +29,7 @@ htmlfile.write('''\
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body><div class="container">
 
     <h1>Dalton testing</h1>
     <h2>Finite field tests of DFT response functions</h2>
@@ -61,7 +61,7 @@ htmlfile.write('''
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="dist/js/bootstrap.min.js"></script>
-  </body>
+  </div></body>
 </html>
 ''')
 htmlfile.close()

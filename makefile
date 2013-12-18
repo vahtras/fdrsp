@@ -5,7 +5,7 @@ TESTFILES = test_findif_ev_open_singlet.py test_findif_ev_closed_singlet.py test
 
 
 test_findif.tgz: test_findif.html $(LOGFILES)
-	tar cfz $@ test_findif.html $(LOGFILES) $(DIRFILES)
+	tar cfz $@ test_findif.html $(LOGFILES) $(DIRFILES) dist
 
 test_findif.html: $(LOGFILES) hf_availfun
 	./makehtml.py $(LOGFILES)
