@@ -13,8 +13,7 @@ Contents:
 
     overview
     example
-    submitall
-    gen_findif_all
+    code
 
 
 

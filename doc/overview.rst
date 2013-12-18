@@ -4,15 +4,13 @@ Overview
 This suite of tests does finite difference test of DFT response functions calculated by Dalton
 The following files are given::
 
-    common_findif.py
-    doc
-    findif.py
+    submitall
     gen_findif_all.py
+    common_findif.py
+    mol.py
+    findif.py
     makefile
     makehtml.py
-    mol.py
-    README
-    submitall
 
 
 The user interface is ``submitall``::
@@ -34,6 +32,11 @@ Test files are generate by looping over all functional names provided in input
 contains data commot to all tests and Used by ``gen_findif_all.py``
 ::
 
+    mol.py
+
+A reference molecule used for all calculations
+::
+
     makefile
     
 performs all tests providing a rule for getting a logfile depening on a file with unit tests
@@ -47,10 +50,7 @@ defines classes for performing response calculations
 
     makehtml.py 
 
-Collects resulting log files and presents results in a web format 
--> `test_findif.html <../../../test_findif.html>`_
+Collects resulting log files and presents results in a html format 
 
 ::
 
-    mol.py
-A reference molecule used for all calculations

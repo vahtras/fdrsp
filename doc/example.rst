@@ -84,7 +84,8 @@ The results will be the file `test_findif.html <_static/hf/test_findif.html>`_
     ./makehtml.py test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log
     tar cfz test_findif.tgz test_findif.html test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log test_findif_ev_closed_singlet.d test_findif_ev_open_singlet.d test_findif_lr_closed_singlet.d test_findif_lr_open_singlet.d test_findif_lr_open_triplet.d test_findif_qr_closed_singlet.d test_findif_qr_closed_triplet.d test_findif_qr_open_singlet.d test_findif_qr_open_triplet.d test_findif_cr_closed_singlet.d
 
-    For an overview of results open test_findif.html in your browser
+    For an overview of results open file:///tmp/fdrsp/test_findif.html in your browser
+    Results, output and logfiles are saved in compressed archive test_findif.tgz
 
 Hartree-Fock and LDA
 --------------------
@@ -197,4 +198,5 @@ Here a failing test generates a link to the corresponding output file.
     tar cfz test_findif.tgz test_findif.html test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log test_findif_ev_closed_singlet.d test_findif_ev_open_singlet.d test_findif_lr_closed_singlet.d test_findif_lr_open_singlet.d test_findif_lr_open_triplet.d test_findif_qr_closed_singlet.d test_findif_qr_closed_triplet.d test_findif_qr_open_singlet.d test_findif_qr_open_triplet.d test_findif_cr_closed_singlet.d dist
 
     For an overview of results open file:///tmp/fdrsp/test_findif.html in your browser
+    Results, output and logfiles are saved in compressed archive test_findif.tgz
 

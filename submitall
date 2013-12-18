@@ -12,3 +12,4 @@ cat $funcfile >> hf_availfun
 make
 echo
 echo "For an overview of results open file://$PWD/test_findif.html in your browser"
+echo "Results, output and logfiles are saved in compressed archive test_findif.tgz"
