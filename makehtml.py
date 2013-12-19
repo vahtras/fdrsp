@@ -39,6 +39,7 @@ with open('./test_findif_lr_closed_singlet.d/hf.out') as hfout:
         if "Git" in line:
             git_revision = line.split('|')[1]
             break
+htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
 htmlfile.write('Git revision: %s<br>' % git_revision)
 htmlfile.write('<table class="table table-bordered table-hover table-condensed">\n')
 htmlfile.write('<tr><th>' + '</th><th>'.join(header) + '</th></tr>\n')
@@ -55,7 +56,6 @@ for ijk in zip(*allfiles):
     htmlfile.write('<tr><td>' + '</td><td>'.join(spl) + '</td></tr>\n')
 htmlfile.write('</table>')
 htmlfile.write('*A fraction of HF exchange was used to aid SCF convergence<br>')
-htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
 htmlfile.write('''
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
