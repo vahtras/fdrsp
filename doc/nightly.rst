@@ -24,9 +24,11 @@ on a dayly basis::
     export PATH=$PATH:/tmp/dalton/build
     ./submitall pure_functionals
     #
-    #tar -C /var/www/dalton -xzf test_findif.tgz
-    #scp test_findif.tgz vidar.biotech.kth.se:
-    #ssh vidar.biotech.kth.se tar -C ./pub -xzf test_findif.tgz
+    # Unpack html at a site of your choice
+    #
+    # scp test_findif.tgz remote_host:
+    # ssh remote_host tar -C ./pub -xzf test_findif.tgz
+    #
 
 * You need to define set-up ssh environment variables to access your repository without giving passwords interactively. Typically in your shell::
 
