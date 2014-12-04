@@ -1,7 +1,5 @@
 #!/bin/bash
 #:r !env | grep SSH_
-SSH_AGENT_PID=27839
-SSH_AUTH_SOCK=/run/user/1000/keyring-ViwqRa/ssh
 #
 export SSH_AGENT_PID SSH_AUTH_SOCK
 
@@ -17,6 +15,5 @@ cd fdrsp
 export PATH=$PATH:/tmp/dalton/build
 ./submitall all_functionals
 #
-#tar -C /var/www/dalton -xzf test_findif.tgz
-scp test_findif.tgz vidar.theochem.kth.se:
-ssh vidar.theochem.kth.se tar -C ./pub -xzf test_findif.tgz
+# scp test_findif.tgz remote_host:
+# ssh remote_host tar -C ./pub -xzf test_findif.tgz
