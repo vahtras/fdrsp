@@ -1,1 +1,6 @@
 _build
+*.pyc
+*.log
+*.d
+hf_availfun
+test_findif_*.py

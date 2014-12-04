@@ -1,5 +1,7 @@
 #!/bin/bash
 #:r !env | grep SSH_
+SSH_AGENT_PID=27839
+SSH_AUTH_SOCK=/run/user/1000/keyring-ViwqRa/ssh
 #
 export SSH_AGENT_PID SSH_AUTH_SOCK
 
@@ -13,8 +15,8 @@ make dalton.x || exit
 git clone https://github.com/vahtras/fdrsp.git
 cd fdrsp
 export PATH=$PATH:/tmp/dalton/build
-./submitall pure_functionals
+./submitall all_functionals
 #
 #tar -C /var/www/dalton -xzf test_findif.tgz
-scp test_findif.tgz vidar.biotech.kth.se:
-ssh vidar.biotech.kth.se tar -C ./pub -xzf test_findif.tgz
+scp test_findif.tgz vidar.theochem.kth.se:
+ssh vidar.theochem.kth.se tar -C ./pub -xzf test_findif.tgz
