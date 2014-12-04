@@ -14,7 +14,7 @@ Contents:
     overview
     example
     code
-
+    nightly
 
 
 Indices and tables
