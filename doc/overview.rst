@@ -1,8 +1,7 @@
 Overview
 ********
 
-This suite of tests does finite difference test of DFT response functions calculated by Dalton
-The following files are given::
+This suite of tests does finite-difference tests of DFT response functions calculated by Dalton.  The following files are given::
 
     submitall
     gen_findif_all.py
