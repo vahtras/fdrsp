@@ -17,7 +17,7 @@ The user interface is ``submitall``::
 
     submitall <functional_name|file_name>
 
-A bash script witch takes a functional name or file with list of functionals
+A bash script which takes a functional name or file with list of functionals
 in addition to given functionals a reference HF calculation will be done at all levels
 ::
 
