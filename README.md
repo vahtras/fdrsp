@@ -1,5 +1,4 @@
-Overview
-********
+## Overview
 
 This suite of tests does finite difference test of DFT response functions calculated by Dalton
 The following files are given::
@@ -12,45 +11,39 @@ The following files are given::
     makefile
     makehtml.py
 
+### The user interface is `submitall`
 
-The user interface is ``submitall``::
+A bash script which takes a functional name or file with list of functionals
 
     submitall <functional_name|file_name>
 
-A bash script witch takes a functional name or file with list of functionals
-in addition to given functionals a reference HF calculation will be done at all levels
-::
+In addition to given functionals a reference HF calculation will be done at all levels
 
-    gen_findif_all.py
+### Python script `gen_findif_all.py`
 
-contains templates for test cases to be executed with ``nosetests``.
+contains templates for test cases to be executed with `nosetests`.
 Test files are generate by looping over all functional names provided in input
-::
 
-    common_findif
 
-contains data commot to all tests and Used by ``gen_findif_all.py``
-::
+### `common_findif`
 
-    mol.py
+Contains data common to all tests and Used by `gen_findif_all.py`
+
+### `mol.py`
 
 A reference molecule used for all calculations
-::
 
-    makefile
+
+### `makefile`
     
-performs all tests providing a rule for getting a logfile depening on a file with unit tests
+Performs all tests providing a rule for getting a logfile depening on a file with unit tests
 
-::
+### `findif.py`
 
-    findif.py
-defines classes for performing response calculations 
+Defines classes for performing response calculations 
 
-::
-
-    makehtml.py 
+### `makehtml.py`
 
 Collects resulting log files and presents results in a html format 
 
-::
 
