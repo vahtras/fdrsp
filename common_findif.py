@@ -63,8 +63,8 @@ def process(template, functionals):
                 validfname = f.replace('-', '_').replace('/', '_').replace(' ', '_').replace('*', '').replace('=','_')
                 dal=validfname.lower()
                 if '*' in f: 
-                    wf = 'DFT\\nGGAKey hf=%f %s=%f' % (hfweight, f.replace('*', ''), 1-hfweight)
+                    wf = 'DFT\\nGGAKey hf=%f %s=%f\\n.XCINT' % (hfweight, f.replace('*', ''), 1-hfweight)
                 else:
-                    wf = 'DFT\\n%s'%f
+                    wf = 'DFT\\n%s\\n.XCINT' % f
                 runfile.write(template[runtype]%(validfname, wf, dal))
             runfile.write(main)

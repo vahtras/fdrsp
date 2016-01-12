@@ -12,7 +12,7 @@ cd dalton
 ./setup --mpi -D CPP=-DDISABLE_XC_RESPONSE_SANITY_CHECK
 cd build
 make -j $ncpu || exit
-git clone https://github.com/vahtras/fdrsp.git
+git clone -b xcint https://github.com/vahtras/fdrsp.git
 cd fdrsp
 export PATH=$PATH:/tmp/dalton/build
 ./submitall all_functionals
