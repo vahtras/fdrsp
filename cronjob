@@ -3,13 +3,15 @@
 #
 export SSH_AGENT_PID SSH_AUTH_SOCK
 
+ncpu=$(grep ^processor /proc/cpuinfo | wc -l)
+
 cd /tmp
 rm -rf dalton
-git clone git@repo.ctcc.no:dalton.git
+git clone --recursive git@gitlab.com:dalton/dalton.git
 cd dalton
-./setup --fc=mpif90 --cc=mpicc --cxx=mpiCC -D CPP=-DDISABLE_XC_RESPONSE_SANITY_CHECK
+./setup --mpi -D CPP=-DDISABLE_XC_RESPONSE_SANITY_CHECK
 cd build
-make dalton.x || exit
+make -j $ncpu || exit
 git clone https://github.com/vahtras/fdrsp.git
 cd fdrsp
 export PATH=$PATH:/tmp/dalton/build
