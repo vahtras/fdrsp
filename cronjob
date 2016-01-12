@@ -9,7 +9,7 @@ cd /tmp
 rm -rf dalton
 git clone --recursive git@gitlab.com:dalton/dalton.git
 cd dalton
-./setup --mpi -D CPP=-DDISABLE_XC_RESPONSE_SANITY_CHECK
+./setup --mpi -D ENABLE_XCINT=ON -D CPP="-DDISABLE_XC_RESPONSE_SANITY_CHECK"
 cd build
 make -j $ncpu || exit
 git clone -b xcint https://github.com/vahtras/fdrsp.git
