@@ -22,3 +22,7 @@ clean:
 	rm  -vf $(PYCFILES)
 	rm  -rvf $(DIRFILES)
  
+test:
+	python -m pytest test_rspcalc.py
+debug:
+	python -m pytest test_rspcalc.py --pdb

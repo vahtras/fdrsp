@@ -213,3 +213,39 @@ ZDIPLEN"""
 def test_dal_under():
     assert RspCalc(wf='1/4')._dal_ == '1_4'
     assert RspCalc(wf='1 4')._dal_ == '1_4'
+
+@mock.patch('findif.open')
+@mock.patch('findif.subprocess.call')
+def test_call(mock_call, mock_open):
+    calc = RspCalc(wf='yo', mol='yo')
+
+    mock_call.return_value = 0
+    mock_file = mock.MagicMock()
+    mock_open().__enter__.return_value = mock_file
+
+    calc.run()
+
+    mock_call.assert_called_once_with(
+        'dalton -N 8 -d -t /tmp/ExpVal_yo yo',
+        stdout=mock_file, stderr=mock_file, shell=True)
+
+
+@mock.patch('findif.open')
+def test_read_energy(mock_open):
+
+    output_line = "Final energy: 3.14"
+
+    mock_file = mock.MagicMock(name='file')
+    mock_iter= mock.MagicMock(name='iter')
+    mock_iterable= mock.MagicMock(name='iterable')
+    mock_next = mock.MagicMock(name='next')
+
+    mock_open.return_value = mock_file
+    mock_file.__iter__ = mock_iter
+    mock_iter.return_value = mock_iterable
+
+    mock_iterable.__next__ = mock_next
+    mock_next.return_value = output_line
+
+    calc = RspCalc()
+    assert calc.get_output() ==  3.14

@@ -61,20 +61,7 @@ class RspCalc:
         with open(self._dal_ + ".mol", 'w') as molfile:
             molfile.write(self.mol)
 
-        if not self.parallel:
-            ncpu = 1
-
-        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, self._dal_, self._dal_)
-        try:
-            with open('log', 'w') as log:
-                retval = subprocess.call(cmd, stdout=log, stderr=log, shell=True)
-            if retval == 0:
-                print("Dalton called OK")
-            else:
-                raise OSError(open('log').read())
-        except OSError as e:
-            print(e)
-            raise
+        self.run()
 
         result = None
         rsp_order = len(self.ops)
@@ -236,3 +223,65 @@ class RspCalc:
 .DPROP
 %s""" % tuple(self.ops[:4])
         return _crinp
+
+    def run(self):
+        global ncpu
+
+        if not self.parallel:
+            ncpu = 1
+
+        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, self._dal_, self._dal_)
+        try:
+            with open('log', 'w') as log:
+                retval = subprocess.call(cmd, stdout=log, stderr=log, shell=True)
+            if retval == 0:
+                print("Dalton called OK")
+            else:
+                raise OSError(open('log').read())
+        except OSError as e:
+            print(e)
+            raise
+
+
+    def get_output(self):
+        result = None
+        rsp_order = len(self.ops)
+        if rsp_order > 0:
+            A = self.ops[0].split()[0]
+        if rsp_order > 1:
+            B = self.ops[1].split()[0]
+        if rsp_order > 2:
+            C = self.ops[2].split()[0]
+        for line in open(self._dal_ + ".out"):
+            if rsp_order == 0:
+                if "Final" in line and "energy" in line:
+                    data = line.split(':')[1].replace('D', 'E')
+                    result = float(data)
+                    break
+            elif rsp_order == 1:
+                if "total" in line and A in line:
+                    data = line.split(':')[1].replace('D', 'E')
+                    result = float(data)
+                    break
+            elif rsp_order == 2:
+                if "@" in line and A in line and B in line:
+                    data = line.split('=')[1].replace('D', 'E')
+                    result = -float(data)
+                    break
+            elif rsp_order == 3:
+                if "@ omega" in line:
+                    data = line.split()[-1]
+                    result = float(data)
+                    break
+            elif rsp_order == 4:
+                if "@ << A; B, C, D >>" in line:
+                    data = line.split()[-1]
+                    result = float(data)
+                    break
+            else:
+                raise RuntimeError("Response order %d not implemented" % rsp_order)
+
+        if result is None or math.isnan(result): 
+            raise ValueError
+
+        return result
