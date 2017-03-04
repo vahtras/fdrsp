@@ -234,18 +234,59 @@ def test_call(mock_call, mock_open):
 def test_read_energy(mock_open):
 
     output_line = "Final energy: 3.14"
+    mock_open.return_value = mock_loop(output_line)
+
+    calc = RspCalc()
+    assert calc.get_output() ==  3.14
+
+def mock_loop(output_line):
 
     mock_file = mock.MagicMock(name='file')
     mock_iter= mock.MagicMock(name='iter')
     mock_iterable= mock.MagicMock(name='iterable')
     mock_next = mock.MagicMock(name='next')
 
-    mock_open.return_value = mock_file
     mock_file.__iter__ = mock_iter
     mock_iter.return_value = mock_iterable
-
     mock_iterable.__next__ = mock_next
     mock_next.return_value = output_line
 
-    calc = RspCalc()
-    assert calc.get_output() ==  3.14
+    return mock_file
+
+
+@mock.patch('findif.open')
+def test_read_z(mock_open):
+
+    output_line = "YDIPLEN  total        :    -1.03702475"
+    mock_open.return_value = mock_loop(output_line)
+
+    calc = RspCalc('YDIPLEN')
+    assert calc.get_output() ==  -1.03702475
+
+@mock.patch('findif.open')
+def test_read_yz(mock_open):
+
+    output_line = "@ -<< XXQUADRU ; YDIPLEN  >> =  4.395689062431D-01"
+    mock_open.return_value = mock_loop(output_line)
+
+    calc = RspCalc('XXQUADRU', 'YDIPLEN')
+    assert calc.get_output() == -4.395689062431e-01
+
+@mock.patch('findif.open')
+def test_read_xyz(mock_open):
+
+    output_line = "@ omega B, omega C, QR value :     0.00000000     0.00000000 3.68627919"
+    mock_open.return_value = mock_loop(output_line)
+
+    calc = RspCalc('XDIPLEN', 'YDIPLEN', 'ZDIPLEN')
+    assert calc.get_output() ==  3.68627919
+
+@mock.patch('findif.open')
+def test_read_xyz(mock_open):
+
+    output_line = "@ << A; B, C, D >>  =         -30.99202444"
+    mock_open.return_value = mock_loop(output_line)
+
+    calc = RspCalc('XDIPLEN', 'YDIPLEN', 'ZDIPLEN', 'WDIPLEN')
+    assert calc.get_output() ==  -30.99202444
+
