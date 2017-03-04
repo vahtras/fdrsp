@@ -2,7 +2,7 @@ import os
 import subprocess
 import math
 import multiprocessing
-#import dalinp
+from errors import MolError
 
 ncpu = multiprocessing.cpu_count()
 
@@ -19,7 +19,6 @@ class FinDif:
         exe = self.obj.exe
         ret1 = exe(0.5*d)
         ret2 = exe(-0.5*d)
-        #print ret1, ret2
         return  (1/d) * (ret1 - ret2)
 
     def second(self):
@@ -49,20 +48,11 @@ class RspCalc:
     def exe(self, delta=None):
 
         global ncpu
+        if self.mol is None:
+            raise MolError
+
         #Wave function
-        if self.field and delta:
-            ff = "*HAMILTON\n.FIELD\n%f\n%s"%(delta, self.field)
-        else:
-            ff = "###"
-
-
-        wavinp = """**WAVE FUNCTIONS
-.%s
-*SCF INPUT
-.NOQCSCF
-.THRESHOLD
-1e-11
-%s""" % (self.wf, ff)
+        wavinp = self.wavinp(delta)
 
         #Response
         if self.triplet:
@@ -152,16 +142,16 @@ class RspCalc:
             with open('log', 'w') as log:
                 retval = subprocess.call(cmd, stdout=log, stderr=log, shell=True)
             if retval == 0:
-                print "Dalton called OK"
+                print("Dalton called OK")
             else:
                 raise OSError(open('log').read())
-        except OSError, e:
-            print e
+        except OSError as e:
+            print(e)
             raise
 
         result = None
         if rsp_order > 0:
-            A  = A.split()[0]
+            A = A.split()[0]
         if rsp_order > 1:
             B = B.split()[0]
         if rsp_order > 2:
@@ -196,8 +186,25 @@ class RspCalc:
                 raise RuntimeError("Response order %d not implemented" % rsp_order)
 
         if result is None or math.isnan(result): 
-            #import pdb; pdb.set_trace()
             raise ValueError
         return result
 
+    def wavinp(self, delta=None):
+        _wavinp = """\
+**WAVE FUNCTION
+.%s
+*SCF INPUT
+.NOQCSCF
+.THRESHOLD
+1e-11
+%s""" % (self.wf, self.finite_field(delta))
+        return  _wavinp
+
+        
+    def finite_field(self, delta=None):
+        if self.field and delta:
+            ff = "*HAMILTON\n.FIELD\n%g\n%s"%(delta, self.field)
+        else:
+            ff = "###"
+        return ff
 
