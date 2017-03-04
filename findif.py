@@ -45,39 +45,26 @@ class RspCalc:
         self.dal = kwargs.get('dal', self.wf)
         self.mol = kwargs.get('mol', None)
 
+    @property
+    def _dal_(self):
+        return self.dal.split('\n')[-1].replace(' ','_').replace('/','_')
+
     def exe(self, delta=None):
 
         global ncpu
         if self.mol is None:
             raise MolError
 
-        #Wave function
-        wavinp = self.wavinp(delta)
-
-        #Response
-        rspinp = self.rspinp()
-
-        dalinp = """**DALTON INPUT
-.RUN RESPONSE
-.DIRECT
-%s
-%s
-**END OF DALTON
-""" % (wavinp, rspinp)
-
-        dal = self.dal.split('\n')[-1].replace(' ','_').replace('/','_')
-        dalfile = open(dal + ".dal", 'w')
-        dalfile.write(dalinp)
-        dalfile.close()
+        with open(self._dal_ + ".dal", 'w') as dalfile:
+            dalfile.write(self.dalinp(delta))
     
-        molfile = open(dal + ".mol", 'w')
-        molfile.write(self.mol)
-        molfile.close()
+        with open(self._dal_ + ".mol", 'w') as molfile:
+            molfile.write(self.mol)
 
         if not self.parallel:
             ncpu = 1
 
-        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, dal, dal)
+        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, self._dal_, self._dal_)
         try:
             with open('log', 'w') as log:
                 retval = subprocess.call(cmd, stdout=log, stderr=log, shell=True)
@@ -97,7 +84,7 @@ class RspCalc:
             B = self.ops[1].split()[0]
         if rsp_order > 2:
             C = self.ops[2].split()[0]
-        for line in open(dal + ".out"):
+        for line in open(self._dal_ + ".out"):
             if rsp_order == 0:
                 if "Final" in line and "energy" in line:
                     data = line.split(':')[1].replace('D', 'E')
@@ -129,6 +116,17 @@ class RspCalc:
         if result is None or math.isnan(result): 
             raise ValueError
         return result
+
+    def dalinp(self, delta=None):
+        _dalinp = """\
+**DALTON INPUT
+.RUN RESPONSE
+.DIRECT
+%s
+%s
+**END OF DALTON
+""" % (self.wavinp(delta), self.rspinp())
+        return _dalinp
 
     def wavinp(self, delta=None):
         _wavinp = """\

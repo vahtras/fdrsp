@@ -82,6 +82,26 @@ def test_rspinp_ev():
 .PROPAV
 ZDIPLEN"""
 
+def test_dalinp_ev():
+    zcalc = RspCalc("YDIPLEN")
+    assert zcalc.dalinp() == """\
+**DALTON INPUT
+.RUN RESPONSE
+.DIRECT
+**WAVE FUNCTION
+.HF
+*SCF INPUT
+.NOQCSCF
+.THRESHOLD
+1e-11
+###
+**RESPONSE
+#
+.PROPAV
+YDIPLEN
+**END OF DALTON
+"""
+
 def test_rspinp_ev_triplet():
     zcalc = RspCalc("ZDIPLEN", triplet=True)
     assert zcalc.rspinp() == """\
@@ -189,3 +209,7 @@ ZDIPLEN
 .DPROP
 ZDIPLEN"""
 
+
+def test_dal_under():
+    assert RspCalc(wf='1/4')._dal_ == '1_4'
+    assert RspCalc(wf='1 4')._dal_ == '1_4'
