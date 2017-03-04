@@ -55,70 +55,7 @@ class RspCalc:
         wavinp = self.wavinp(delta)
 
         #Response
-        if self.triplet:
-            trpflg = ".TRPFLG"
-        else:
-            trpflg = "#"
-
-        rsp_order = len(self.ops)
-
-        if (rsp_order == 0):
-            rspinp = "###"
-        elif (rsp_order == 1):
-            A, = self.ops
-            rspinp = """**RESPONSE
-%s
-.PROPAV
-%s""" % (trpflg, A)
-
-        elif (rsp_order == 2):
-            A, B = self.ops
-            rspinp = """**RESPONSE
-%s
-*LINEAR
-.THCLR
-1e-10
-.PROPRT
-%s
-.PROPRT
-%s
-%s """ % (trpflg, A, B, self.aux)
-
-        elif rsp_order == 3:
-            if not self.parallel: ncpu = 1
-            A, B, C = self.ops
-            rspinp = """**RESPONSE
-%s
-*QUADRATIC
-.THCLR
-1e-10
-.APROP 
-%s
-.BPROP
-%s
-.CPROP
-%s
-%s """ % (trpflg, A, B, C, self.aux)
-
-        elif rsp_order == 4:
-            A, B, C, D = self.ops
-            rspinp = """**RESPONSE
-%s
-*CUBIC
-.THCLR
-1e-10
-.APROP 
-%s
-.BPROP
-%s
-.CPROP
-%s
-.DPROP
-%s
-%s""" % (trpflg, A, B, C, D, self.aux)
-
-        else:
-            raise RuntimeError("Response order %d not implemented" % rsp_order)
+        rspinp = self.rspinp()
 
         dalinp = """**DALTON INPUT
 .RUN RESPONSE
@@ -137,6 +74,9 @@ class RspCalc:
         molfile.write(self.mol)
         molfile.close()
 
+        if not self.parallel:
+            ncpu = 1
+
         cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, dal, dal)
         try:
             with open('log', 'w') as log:
@@ -150,12 +90,13 @@ class RspCalc:
             raise
 
         result = None
+        rsp_order = len(self.ops)
         if rsp_order > 0:
-            A = A.split()[0]
+            A = self.ops[0].split()[0]
         if rsp_order > 1:
-            B = B.split()[0]
+            B = self.ops[1].split()[0]
         if rsp_order > 2:
-            C = C.split()[0]
+            C = self.ops[2].split()[0]
         for line in open(dal + ".out"):
             if rsp_order == 0:
                 if "Final" in line and "energy" in line:
@@ -208,3 +149,92 @@ class RspCalc:
             ff = "###"
         return ff
 
+    def rspinp(self):
+
+        if self.is_response():
+            _rspinp = """\
+**RESPONSE
+%s""" % self.triplet_label()
+        else:
+            _rspinp = "###"
+
+        if self.is_expectation_value():
+            _rspinp += "\n%s" % self.evinp()
+
+        if self.is_lr():
+            _rspinp += "\n%s" % self.lrinp()
+
+        if self.is_qr():
+            _rspinp += "\n%s" % self.qrinp()
+
+        if self.is_cr():
+            _rspinp += "\n%s" % self.crinp()
+
+        return _rspinp
+
+    def is_response(self):
+        return len(self.ops) > 0
+
+    def is_expectation_value(self):
+        return len(self.ops) == 1
+
+    def is_lr(self):
+        return len(self.ops) == 2
+
+    def is_qr(self):
+        return len(self.ops) == 3
+
+    def is_cr(self):
+        return len(self.ops) == 4
+        
+    def triplet_label(self):
+        if self.triplet:
+            return ".TRPFLG"
+        else:
+            return "#"
+
+    def evinp(self):
+        return ".PROPAV\n%s" % self.ops[0]
+
+    def lrinp(self):
+        _lrinp = """\
+*LINEAR
+.THCLR
+1e-10
+.PROPRT
+%s
+.PROPRT
+%s""" % tuple(self.ops[:2])
+        return _lrinp
+
+    def qrinp(self):
+        _qrinp = """\
+*QUADRATIC
+.THCLR
+1e-10
+.APROP
+%s
+.BPROP
+%s
+.CPROP
+%s""" % tuple(self.ops[:3])
+        if self.triplet:
+            _qrinp += """
+.ISPABC
+ 1 1 0"""
+        return _qrinp
+
+    def crinp(self):
+        _crinp = """\
+*CUBIC
+.THCLR
+1e-10
+.APROP
+%s
+.BPROP
+%s
+.CPROP
+%s
+.DPROP
+%s""" % tuple(self.ops[:4])
+        return _crinp
