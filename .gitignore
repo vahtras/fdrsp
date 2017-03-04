@@ -4,3 +4,8 @@ _build
 *.d
 hf_availfun
 test_findif_*.py
+.cache
+test_findif.html
+test_findif.tgz
+venv*
+.vimrc
