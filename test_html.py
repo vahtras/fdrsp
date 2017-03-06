@@ -42,6 +42,24 @@ OK
 
     pdt.assert_series_equal(makehtml.collect_status_column(input_lines), s)
 
+def test_collect_status_column_pt():
+    input_lines = """
+collecting ... collected 2 items
+
+../../../../tmp/tmpmvwca5pe/test_findif_ev_open_singlet.py::test_findif_HF PASSED
+../../../../tmp/tmpmvwca5pe/test_findif_ev_open_singlet.py::test_findif_lda PASSED
+
+=========================== 2 passed in 3.63 seconds ===========================
+""".strip().split('\n')
+
+    s = pd.Series(
+        ['<a href="test_findif_ev_open_singlet.d/hf.out">PASSED</a>', 
+         '<a href="test_findif_ev_open_singlet.d/lda.out">PASSED</a>'],
+        index=["HF", "lda"]
+    )
+
+    pdt.assert_series_equal(makehtml.collect_status_column_pt(input_lines), s)
+
 @mock.patch('makehtml.open')
 def test_collect_status_table(mock_open):
 

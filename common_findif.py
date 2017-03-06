@@ -30,8 +30,10 @@ def setup():
     n, e = os.path.splitext(__file__)
     suppdir = n + ".d"
     if os.path.isdir(suppdir):
-        shutil.rmtree(suppdir)
-    os.mkdir(suppdir)
+        #shutil.rmtree(suppdir)
+        pass
+    else:
+        os.mkdir(suppdir)
     os.chdir(suppdir)
 
 def teardown():

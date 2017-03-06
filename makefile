@@ -1,4 +1,4 @@
-TESTFILES=$(wildcard $(TMPDIR)/test_findif_*.py)
+TESTFILES = $(TMPDIR)/test_findif_ev_closed_singlet.py $(TMPDIR)/test_findif_ev_open_singlet.py $(TMPDIR)/test_findif_lr_closed_singlet.py $(TMPDIR)/test_findif_lr_open_singlet.py $(TMPDIR)/test_findif_lr_open_triplet.py $(TMPDIR)/test_findif_qr_closed_singlet.py $(TMPDIR)/test_findif_qr_closed_triplet.py $(TMPDIR)/test_findif_qr_open_singlet.py $(TMPDIR)/test_findif_qr_open_triplet.py $(TMPDIR)/test_findif_cr_closed_singlet.py
 PYCFILES=$(patsubst %.py, %.pyc, $(TESTFILES))
 LOGFILES=$(patsubst %.py, %.log, $(TESTFILES))
 DIRFILES=$(patsubst %.py, %.d, $(TESTFILES))
@@ -16,7 +16,7 @@ test_findif.html: $(LOGFILES) hf_availfun
 .SUFFIXES: .py .log
 
 .py.log:
-	python -m nose  -v $? 2>&1 | tee $@
+	python -m pytest  -v $? 2>&1 | tee $@
 
 clean:
 	rm  -vf $(TESTFILES)

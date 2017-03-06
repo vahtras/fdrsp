@@ -38,8 +38,26 @@ def collect_status_column(loglines):
         ]
     return pandas.Series(status, index=functional)
 
+def collect_status_column_pt(loglines):
+    status_tag = "::test_findif_"
+    #import pdb; pdb.set_trace()
+    testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
+    functional = [t[1].split()[0] for t in testcase_status]
+    testcase = [root(tail(t[0])) + ".d/%s.out" % f.lower() for t,f in zip(testcase_status, functional)]
+    status = [
+        '<a href="%s">%s</a>' % (t, s[1].split()[1])
+        for t, s in zip(testcase, testcase_status)
+        ]
+    return pandas.Series(status, index=functional)
+
 def collect_status_table(*logs):
     series = [collect_status_column(open(log)) for log in logs]
+    df = pandas.concat(series, axis=1)
+    df.columns=logs
+    return df
+
+def collect_status_table_pt(*logs):
+    series = [collect_status_column_pt(open(log)) for log in logs]
     df = pandas.concat(series, axis=1)
     df.columns=logs
     return df
@@ -89,7 +107,7 @@ def main(*logfiles):
                 
     htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
     htmlfile.write('Git revision: %s<br>' % git_revision)
-    df = collect_status_table(*logfiles)
+    df = collect_status_table_pt(*logfiles)
     df.columns = header[1:]
     htmlfile.write(df.to_html(classes="table table-striped", escape=False))
     htmlfile.write('*A fraction of HF exchange was used to aid SCF convergence<br>')
