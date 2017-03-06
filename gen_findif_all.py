@@ -10,7 +10,7 @@ Checks d<<A; B, C>>/dx(X) = <<A; B, C, D>>
 """
 
 import sys
-from common_findif import setup, delta, main, hfweight
+from common_findif import delta, process
 
 file_of_functionals = sys.argv.pop()
 A, B, C, X = sys.argv[1:]
@@ -121,7 +121,6 @@ functionals = [ line.strip() for line in open(file_of_functionals) ]
 #
 
 
-from common_findif import process
 process(template, functionals)
 
 

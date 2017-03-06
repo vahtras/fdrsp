@@ -1,6 +1,8 @@
+"""Pytest style tests for findif module"""
+
 import pytest
 import mock
-from findif import RspCalc
+from findif import RspCalc, last_float
 from errors import MolError
 
 
@@ -290,3 +292,6 @@ def test_read_xyz(mock_open):
     calc = RspCalc('XDIPLEN', 'YDIPLEN', 'ZDIPLEN', 'WDIPLEN')
     assert calc.get_output() ==  -30.99202444
 
+def test_line_float():
+    assert last_float('X = 1.4D0') == 1.4
+    assert last_float('Y : 1.2e0') == 1.2

@@ -1,3 +1,4 @@
+import os
 #
 # Finite field strength
 #
@@ -17,10 +18,10 @@ from mol import inp
 
 def assert_(num,ana):
     atol = 1e-8
-    print "Numerical ", num
-    print "Analytical", ana
-    print "Difference ", abs(num-ana)
-    print "Target diff", atol + %f*abs(ana)
+    print("Numerical ", num)
+    print("Analytical", ana)
+    print("Difference ", abs(num-ana))
+    print("Target diff", atol + %f*abs(ana))
     assert np.allclose(num, ana, rtol=%f)
         
 
@@ -55,8 +56,9 @@ if __name__ == "__main__":
 #
 
 def process(template, functionals):
+    tmp = os.environ['TMPDIR']
     for runtype in template:
-        with open("test_findif_" + runtype + ".py", 'w') as runfile:
+        with open(os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w') as runfile:
             runfile.write(setup)
             runfile.write( template[runtype]%('HF', 'HF', 'hf'))
             for f in functionals:
