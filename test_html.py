@@ -35,7 +35,8 @@ OK
 """.strip().split('\n')
 
     s = pd.Series(
-        ["ok", "ok"],
+        ['<a href="test_findif_ev_closed_singlet.d/hf.out">ok</a>', 
+         '<a href="test_findif_ev_closed_singlet.d/lda.out">ok</a>'],
         index=["HF", "lda"]
     )
 
@@ -66,8 +67,12 @@ OK
     mock_open.side_effect = [input_lines1, input_lines2]
 
     ref_df = pd.DataFrame([
-        ["ok", "ok"],
-        ["ok", "ok"],
+        ['<a href="test_findif_ev_closed_singlet.d/hf.out">ok</a>', 
+         '<a href="test_findif_ev_open_singlet.d/hf.out">ok</a>'
+        ],
+        ['<a href="test_findif_ev_closed_singlet.d/lda.out">ok</a>', 
+         '<a href="test_findif_ev_open_singlet.d/lda.out">ok</a>'
+        ],
         ],
         index=["HF", "lda"],
         columns=["logfile1", "logfile2"]

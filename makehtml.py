@@ -3,6 +3,8 @@ import sys
 import os
 import datetime
 import pandas
+pandas.set_option('display.max_colwidth', -1)
+
 
 def head(path):
     return os.path.split(path)[0]
@@ -29,7 +31,11 @@ def collect_status_column(loglines):
     status_tag = " ... "
     testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
     functional = [t[0].split('_')[-1] for t in testcase_status]
-    status = [t[1] for t in testcase_status]
+    testcase = [t[0].split('.')[0] + ".d/%s.out" % f.lower() for t,f in zip(testcase_status, functional)]
+    status = [
+        '<a href="%s">%s</a>' % (t, s[1].strip())
+        for t, s in zip(testcase, testcase_status)
+        ]
     return pandas.Series(status, index=functional)
 
 def collect_status_table(*logs):
@@ -44,7 +50,7 @@ def get_git_revision(lines):
             return line.split('|')[1].strip()
     
 
-def main(logfiles):
+def main(*logfiles):
     tmp = os.environ['TMPDIR']
 
     dirs = get_dirs(logfiles)
@@ -83,20 +89,9 @@ def main(logfiles):
                 
     htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
     htmlfile.write('Git revision: %s<br>' % git_revision)
-    htmlfile.write('<table class="table table-bordered table-hover table-condensed">\n')
-    htmlfile.write('<tr><th>' + '</th><th>'.join(header) + '</th></tr>\n')
-    for ijk in zip(*allfiles):
-        spl = [ line.split('...')[-1].strip() for line in ijk ]
-        dal = spl[0].strip('*').replace('/', '_').replace('-','_').lower()
-        for i, stat_dir in enumerate(zip(spl[1:], dirs)):
-            stat, _dir = stat_dir
-            if "FAIL" in stat:
-                spl[i+1] = "<a href=%s/%s.out>FAIL</a>" % (_dir, dal)
-            if "ERROR" in stat:
-                spl[i+1] = "<a href=%s/%s.out>ERROR</a>" % (_dir, dal)
-                
-        htmlfile.write('<tr><td>' + '</td><td>'.join(spl) + '</td></tr>\n')
-    htmlfile.write('</table>')
+    df = collect_status_table(*logfiles)
+    df.columns = header[1:]
+    htmlfile.write(df.to_html(classes="table table-striped", escape=False))
     htmlfile.write('*A fraction of HF exchange was used to aid SCF convergence<br>')
     htmlfile.write('''
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -109,4 +104,4 @@ def main(logfiles):
     htmlfile.close()
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main(*sys.argv[1:])
