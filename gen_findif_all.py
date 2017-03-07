@@ -123,7 +123,97 @@ def test_findif_generic(functional):
     escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
     ev = RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
     assert_(escf, ev)
-""" % ("%s", X, delta, X)
+""" % ("%s", X, delta, X),
+#
+"ev_open_singlet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
+    ev = RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o+"]).exe()
+    assert_(escf, ev)
+""" % ("%s", X, delta, X),
+#
+"lr_closed_singlet":  """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    ev = FinDif(RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
+    lr = RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
+    assert_(ev, lr)
+""" % ("%s", A, X, delta, A, X),
+#
+"lr_open_singlet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    ev = FinDif(RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
+    lr = RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o+"]).exe()
+    assert_(ev, lr)
+""" % ("%s", A, X, delta, A, X),
+#
+"lr_open_triplet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    ev = FinDif(RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o+"], triplet=True, field='%s', delta=%f)).first() 
+    lr = RspCalc('%s 1', '%s', wf=wf, dal=dal, mol=inp["h2o+"], triplet=False).exe()
+    assert_(ev, lr)
+""" % ("%s", A, X, delta, A, X),
+#
+"qr_closed_singlet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    lr = FinDif(RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
+    qr = RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
+    assert_(lr, qr)
+""" % ("%s", A, B, X, delta, A, B, X),
+#
+"qr_closed_triplet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    lr = FinDif(RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], triplet=True, field='%s', delta=%f)).first() 
+    qr = RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], triplet=True, aux=".ISPABC\\n 1 1 0").exe()
+    assert_(lr, qr)
+""" % ("%s", A, B, X, delta, A, B, X),
+#
+"qr_open_singlet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    lr = FinDif(RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
+    qr = RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o+"], parallel=False).exe()
+    assert_(lr, qr)
+""" % ("%s", A, B, X, delta, A, B, X),
+#
+"qr_open_triplet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    lr = FinDif(RspCalc('%s', '%s 1', wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
+    qr = RspCalc('%s', '%s 1', '%s', wf=wf, dal=dal, mol=inp["h2o+"], parallel=False).exe()
+    assert_(lr, qr)
+""" % ("%s", A, B, X, delta, A, B, X),
+#
+"cr_closed_singlet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    qr = FinDif(RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
+    cr = RspCalc('%s', '%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
+    assert_(qr, cr)
+""" % ("%s", A, B, C, X, delta, A, B, C, X)
 }
 
 functionals = [ line.strip() for line in open(file_of_functionals) ] 
