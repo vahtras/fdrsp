@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
+import re
 import datetime
 import pandas
 pandas.set_option('display.max_colwidth', -1)
@@ -40,14 +41,18 @@ def collect_status_column(loglines):
 
 def collect_status_column_pt(loglines):
     status_tag = "::test_findif_"
-    testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
-    functional = [t[1].split()[0] for t in testcase_status]
-    testcase = [root(tail(t[0])) + ".d/%s.out" % f.lower() for t,f in zip(testcase_status, functional)]
+    tmppath_testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
+    functionals = [get_functional(line[1]) for line in tmppath_testcase_status]
+    testcase = [root(tail(t[0])) + ".d/%s.out" % f for t,f in zip(tmppath_testcase_status, functionals)]
     status = [
         '<a href="%s">%s</a>' % (t, s[1].split()[1])
-        for t, s in zip(testcase, testcase_status)
+        for t, s in zip(testcase, tmppath_testcase_status)
         ]
-    return pandas.Series(status, index=functional)
+    return pandas.Series(status, index=functionals)
+
+def get_functional(logline):
+    import re
+    return re.match(r'.*\[(\w+)\].*', logline).group(1)
 
 def collect_status_table(*logs):
     series = [collect_status_column(open(log)) for log in logs]
@@ -101,7 +106,7 @@ def main(*logfiles):
     <h2>Finite field tests of DFT response functions</h2>
 ''')
 
-    with open(root(logfiles[0]) + ".d/hf.out") as hfout:
+    with open(root(logfiles[0]) + ".d/HF.out") as hfout:
         git_revision = get_git_revision(hfout)
                 
     htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))

@@ -10,7 +10,7 @@ Checks d<<A; B, C>>/dx(X) = <<A; B, C, D>>
 """
 
 import sys
-from common_findif import delta, process
+from common_findif import delta, process, process_pt
 
 file_of_functionals = sys.argv.pop()
 A, B, C, X = sys.argv[1:]
@@ -114,6 +114,18 @@ def test_findif_%s():
     assert_(qr, cr)
 """ % ("%s", "%s", "%s", A, B, C, X, delta, A, B, C, X)
 
+templates_pt = {
+"ev_closed_singlet": """
+@pytest.mark.parametrize("functional", [%s])
+def test_findif_generic(functional):
+    wf=functional
+    dal=functional
+    escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
+    ev = RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
+    assert_(escf, ev)
+""" % ("%s", X, delta, X)
+}
+
 functionals = [ line.strip() for line in open(file_of_functionals) ] 
 
 #
@@ -121,6 +133,4 @@ functionals = [ line.strip() for line in open(file_of_functionals) ]
 #
 
 
-process(template, functionals)
-
-
+process_pt(templates_pt, functionals)

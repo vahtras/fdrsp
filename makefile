@@ -1,4 +1,4 @@
-TESTFILES = $(TMPDIR)/test_findif_ev_closed_singlet.py $(TMPDIR)/test_findif_ev_open_singlet.py $(TMPDIR)/test_findif_lr_closed_singlet.py $(TMPDIR)/test_findif_lr_open_singlet.py $(TMPDIR)/test_findif_lr_open_triplet.py $(TMPDIR)/test_findif_qr_closed_singlet.py $(TMPDIR)/test_findif_qr_closed_triplet.py $(TMPDIR)/test_findif_qr_open_singlet.py $(TMPDIR)/test_findif_qr_open_triplet.py $(TMPDIR)/test_findif_cr_closed_singlet.py
+TESTFILES = $(TMPDIR)/test_findif_ev_closed_singlet.py #$(TMPDIR)/test_findif_ev_open_singlet.py $(TMPDIR)/test_findif_lr_closed_singlet.py $(TMPDIR)/test_findif_lr_open_singlet.py $(TMPDIR)/test_findif_lr_open_triplet.py $(TMPDIR)/test_findif_qr_closed_singlet.py $(TMPDIR)/test_findif_qr_closed_triplet.py $(TMPDIR)/test_findif_qr_open_singlet.py $(TMPDIR)/test_findif_qr_open_triplet.py $(TMPDIR)/test_findif_cr_closed_singlet.py
 PYCFILES=$(patsubst %.py, %.pyc, $(TESTFILES))
 LOGFILES=$(patsubst %.py, %.log, $(TESTFILES))
 DIRFILES=$(patsubst %.py, %.d, $(TESTFILES))
@@ -25,6 +25,6 @@ clean:
 	rm  -rvf $(DIRFILES)
  
 test:
-	python -m pytest test_rspcalc.py test_html.py
+	python -m pytest test_*.py
 debug:
 	python -m pytest test_rspcalc.py test_html.py --pdb

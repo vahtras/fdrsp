@@ -10,6 +10,7 @@ hfweight = 0.5
 #
 
 setup = """
+import pytest
 import os
 import shutil
 import numpy as np
@@ -58,7 +59,7 @@ if __name__ == "__main__":
 #
 
 def process(template, functionals):
-    tmp = os.environ['TMPDIR']
+    tmp = os.environ.get('TMPDIR', '/tmp')
     for runtype in template:
         with open(os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w') as runfile:
             runfile.write(setup)
@@ -72,3 +73,12 @@ def process(template, functionals):
                     wf = 'DFT\\n%s'%f
                 runfile.write(template[runtype]%(validfname, wf, dal))
             runfile.write(main)
+
+def process_pt(template, functionals):
+    tmp = os.environ.get('TMPDIR', '/tmp')
+    quoted = ['"%s"' % f for f in functionals]
+    for runtype in template:
+        with open(os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w') as runfile:
+            runfile.write(setup)
+            runfile.write(template[runtype] % ", ".join(['"HF"'] + quoted))
+            #runfile.write(main)

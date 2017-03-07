@@ -42,23 +42,26 @@ OK
 
     pdt.assert_series_equal(makehtml.collect_status_column(input_lines), s)
 
+#@pytest.mark.skip('hold')
 def test_collect_status_column_pt():
     input_lines = """
 collecting ... collected 2 items
 
-../../../../tmp/tmpmvwca5pe/test_findif_ev_open_singlet.py::test_findif_HF PASSED
-../../../../tmp/tmpmvwca5pe/test_findif_ev_open_singlet.py::test_findif_lda PASSED
+.../test_findif_ev_closed_singlet.py::test_findif_generic[HF] PASSED
+.../test_findif_ev_closed_singlet.py::test_findif_generic[LDA] PASSED
 
 =========================== 2 passed in 3.63 seconds ===========================
 """.strip().split('\n')
 
-    s = pd.Series(
-        ['<a href="test_findif_ev_open_singlet.d/hf.out">PASSED</a>', 
-         '<a href="test_findif_ev_open_singlet.d/lda.out">PASSED</a>'],
-        index=["HF", "lda"]
+    ref_status = pd.Series(
+        ['<a href="test_findif_ev_closed_singlet.d/HF.out">PASSED</a>', 
+         '<a href="test_findif_ev_closed_singlet.d/LDA.out">PASSED</a>'],
+        index=["HF", "LDA"]
     )
 
-    pdt.assert_series_equal(makehtml.collect_status_column_pt(input_lines), s)
+    status = makehtml.collect_status_column_pt(input_lines)
+    pdt.assert_series_equal(status, ref_status)
+
 
 @mock.patch('makehtml.open')
 def test_collect_status_table(mock_open):
@@ -102,3 +105,6 @@ OK
 def test_git_revision():
     lines = ("before", "Git | 7.2", "after")
     assert makehtml.get_git_revision(lines) == "7.2"
+
+def test_get_functional():
+    assert makehtml.get_functional("...[LDA]...") == "LDA"
