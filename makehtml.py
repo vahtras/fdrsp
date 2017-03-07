@@ -40,7 +40,6 @@ def collect_status_column(loglines):
 
 def collect_status_column_pt(loglines):
     status_tag = "::test_findif_"
-    #import pdb; pdb.set_trace()
     testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
     functional = [t[1].split()[0] for t in testcase_status]
     testcase = [root(tail(t[0])) + ".d/%s.out" % f.lower() for t,f in zip(testcase_status, functional)]
