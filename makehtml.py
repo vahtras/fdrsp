@@ -52,7 +52,7 @@ def collect_status_column_pt(loglines):
 
 def get_functional(logline):
     import re
-    return re.match(r'.*\[(\w+\*?)\].*', logline).group(1)
+    return re.match(r'.*\[([\w/]+\*?)\].*', logline).group(1)
 
 def collect_status_table(*logs):
     series = [collect_status_column(open(log)) for log in logs]
@@ -88,7 +88,7 @@ def main(*logfiles):
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Finite differend tests</title>
+    <title>Finite different tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
