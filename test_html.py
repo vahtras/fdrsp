@@ -108,3 +108,6 @@ def test_git_revision():
 
 def test_get_functional():
     assert makehtml.get_functional("...[LDA]...") == "LDA"
+
+def test_get_functional_with_hfx():
+    assert makehtml.get_functional("...[LDA*]...") == "LDA*"

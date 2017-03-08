@@ -24,7 +24,6 @@ def assert_(num,ana):
     print("Difference ", abs(num-ana))
     print("Target diff", atol + %f*abs(ana))
     assert np.allclose(num, ana, rtol=%f)
-        
 
 def setup():
     global suppdir
@@ -41,6 +40,16 @@ def teardown():
     #shutil.rmtree(suppdir)
     pass
 """ % (rtol, rtol)
+
+setup += """
+def dft(functional):
+    if functional.upper() == 'HF':
+        return functional
+    elif '*' in functional:
+        return 'DFT\\nGGAKey hf=%g %%s=%g' %% functional.strip('*')
+    else:
+        return 'DFT\\n%%s' %% functional
+""" % (hfweight, 1-hfweight)
 
 #
 # Bottom part of script: main (to invoke inividual tests)

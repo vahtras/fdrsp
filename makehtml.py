@@ -52,7 +52,7 @@ def collect_status_column_pt(loglines):
 
 def get_functional(logline):
     import re
-    return re.match(r'.*\[(\w+)\].*', logline).group(1)
+    return re.match(r'.*\[(\w+\*?)\].*', logline).group(1)
 
 def collect_status_table(*logs):
     series = [collect_status_column(open(log)) for log in logs]
