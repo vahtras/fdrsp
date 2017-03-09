@@ -48,11 +48,14 @@ def test_git_revision():
     lines = ("before", "Git | 7.2", "after")
     assert makehtml.get_git_revision(lines) == "7.2"
 
-def test_get_functional():
+def test_get_functional_lda():
     assert makehtml.get_functional("...[LDA]...") == "LDA"
 
 def test_get_functional_with_hfx():
     assert makehtml.get_functional("...[LDA*]...") == "LDA*"
 
-def test_get_functional():
+def test_get_functional_14():
     assert makehtml.get_functional("...[1/4]...") == "1/4"
+
+def test_canonical():
+    assert makehtml.canonical('1/4') == '1_4'

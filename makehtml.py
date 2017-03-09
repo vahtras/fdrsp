@@ -28,22 +28,14 @@ def short(log):
 def get_dirs(logs):
     return [os.path.splitext(log)[0]+'.d' for log in logs]
 
-def _collect_status_column(loglines):
-    status_tag = " ... "
-    testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
-    functional = [t[0].split('_')[-1] for t in testcase_status]
-    testcase = [t[0].split('.')[0] + ".d/%s.out" % f.lower() for t,f in zip(testcase_status, functional)]
-    status = [
-        '<a href="%s">%s</a>' % (t, s[1].strip())
-        for t, s in zip(testcase, testcase_status)
-        ]
-    return pandas.Series(status, index=functional)
+def canonical(s):
+    return s.replace('/', '_')
 
 def collect_status_column_pt(loglines):
     status_tag = "::test_findif_"
     tmppath_testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
     functionals = [get_functional(line[1]) for line in tmppath_testcase_status]
-    testcase = [root(tail(t[0])) + ".d/%s.out" % f for t,f in zip(tmppath_testcase_status, functionals)]
+    testcase = [root(tail(t[0])) + ".d/%s.out" % canonical(f) for t,f in zip(tmppath_testcase_status, functionals)]
     status = [
         '<a href="%s">%s</a>' % (t, s[1].split()[1])
         for t, s in zip(testcase, tmppath_testcase_status)
