@@ -28,7 +28,7 @@ def short(log):
 def get_dirs(logs):
     return [os.path.splitext(log)[0]+'.d' for log in logs]
 
-def collect_status_column(loglines):
+def _collect_status_column(loglines):
     status_tag = " ... "
     testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
     functional = [t[0].split('_')[-1] for t in testcase_status]

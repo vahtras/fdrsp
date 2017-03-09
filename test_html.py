@@ -24,25 +24,6 @@ def test_dirs():
     assert makehtml.get_dirs(logs) == ["/c/a.d", "/c/b.d"]
 
 
-def test_collect_status_column():
-    input_lines = """
-test_findif_ev_closed_singlet.test_findif_HF ... ok
-test_findif_ev_closed_singlet.test_findif_lda ... ok
-----------------------------------------------------------------------
-Ran 2 tests in 3.728s
-
-OK
-""".strip().split('\n')
-
-    s = pd.Series(
-        ['<a href="test_findif_ev_closed_singlet.d/hf.out">ok</a>', 
-         '<a href="test_findif_ev_closed_singlet.d/lda.out">ok</a>'],
-        index=["HF", "lda"]
-    )
-
-    pdt.assert_series_equal(makehtml.collect_status_column(input_lines), s)
-
-#@pytest.mark.skip('hold')
 def test_collect_status_column_pt():
     input_lines = """
 collecting ... collected 2 items
@@ -62,45 +43,6 @@ collecting ... collected 2 items
     status = makehtml.collect_status_column_pt(input_lines)
     pdt.assert_series_equal(status, ref_status)
 
-
-@mock.patch('makehtml.open')
-def test_collect_status_table(mock_open):
-
-    input_lines1 =  """
-test_findif_ev_closed_singlet.test_findif_HF ... ok
-test_findif_ev_closed_singlet.test_findif_lda ... ok
-----------------------------------------------------------------------
-Ran 2 tests in 3.728s
-
-OK
-""".strip().split('\n')
-
-    input_lines2 =  """
-test_findif_ev_open_singlet.test_findif_HF ... ok
-test_findif_ev_open_singlet.test_findif_lda ... ok
-----------------------------------------------------------------------
-Ran 2 tests in 3.728s
-
-OK
-""".strip().split('\n')
-
-    logfiles = ("logfile1", "logfile2")
-    mock_open.side_effect = [input_lines1, input_lines2]
-
-    ref_df = pd.DataFrame([
-        ['<a href="test_findif_ev_closed_singlet.d/hf.out">ok</a>', 
-         '<a href="test_findif_ev_open_singlet.d/hf.out">ok</a>'
-        ],
-        ['<a href="test_findif_ev_closed_singlet.d/lda.out">ok</a>', 
-         '<a href="test_findif_ev_open_singlet.d/lda.out">ok</a>'
-        ],
-        ],
-        index=["HF", "lda"],
-        columns=["logfile1", "logfile2"]
-    )
-    df = makehtml.collect_status_table(*logfiles)
-
-    pdt.assert_frame_equal(df, ref_df)
 
 def test_git_revision():
     lines = ("before", "Git | 7.2", "after")
