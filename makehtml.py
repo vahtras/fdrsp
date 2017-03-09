@@ -78,13 +78,21 @@ def main(*logfiles):
     dirs = get_dirs(logfiles)
     allfiles = [open('hf_availfun')] + [open(log) for log in logfiles]
 
-
-
-
     header = ["Functional"] + ['<a href="%s">%s</a>'%(tail(log), short(log)) for log in logfiles]
 
-    htmlfile = open('test_findif.html', 'w')
-    htmlfile.write('''\
+    with open('test_findif.html', 'w') as htmlfile:
+        htmlfile.write(html_head('Dalton testing', 'Finite field tests of DFT response functions'))
+        htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
+        with open(root(logfiles[0]) + ".d/HF.out") as hfout:
+            htmlfile.write('Git revision: %s<br>' % get_git_revision(hfout))
+        df = collect_status_table_pt(*logfiles)
+        df.columns = header[1:]
+        htmlfile.write(df.to_html(classes="table table-striped", escape=False))
+        htmlfile.write('*A fraction of HF exchange was used to aid SCF convergence<br>')
+        htmlfile.write(html_tail())
+
+def html_head(h1="", h2=""):
+    return """
 <!DOCTYPE html>
 <html>
   <head>
@@ -101,29 +109,19 @@ def main(*logfiles):
     <![endif]-->
   </head>
   <body><div class="container">
+    <h1>%s</h1><h2>%s</h2>
+""" % (h1, h2)
 
-    <h1>Dalton testing</h1>
-    <h2>Finite field tests of DFT response functions</h2>
-''')
-
-    with open(root(logfiles[0]) + ".d/HF.out") as hfout:
-        git_revision = get_git_revision(hfout)
-                
-    htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
-    htmlfile.write('Git revision: %s<br>' % git_revision)
-    df = collect_status_table_pt(*logfiles)
-    df.columns = header[1:]
-    htmlfile.write(df.to_html(classes="table table-striped", escape=False))
-    htmlfile.write('*A fraction of HF exchange was used to aid SCF convergence<br>')
-    htmlfile.write('''
+def html_tail():
+    return '''
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="dist/js/bootstrap.min.js"></script>
   </div></body>
 </html>
-''')
-    htmlfile.close()
+'''
+
 
 if __name__ == "__main__":
     main(*sys.argv[1:])
