@@ -46,12 +46,6 @@ def get_functional(logline):
     import re
     return re.match(r'.*\[([\w/]+\*?)\].*', logline).group(1)
 
-def collect_status_table(*logs):
-    series = [collect_status_column(open(log)) for log in logs]
-    df = pandas.concat(series, axis=1)
-    df.columns=logs
-    return df
-
 def collect_status_table_pt(*logs):
     series = [collect_status_column_pt(open(log)) for log in logs]
     df = pandas.concat(series, axis=1)
