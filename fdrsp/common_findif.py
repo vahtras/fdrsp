@@ -14,8 +14,8 @@ import pytest
 import os
 import shutil
 import numpy as np
-from findif import *
-from mol import inp
+from fdrsp.findif import *
+from fdrsp.mol import inp
 
 def assert_(num,ana):
     atol = 1e-8

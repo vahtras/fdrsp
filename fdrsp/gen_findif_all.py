@@ -10,7 +10,7 @@ Checks d<<A; B, C>>/dx(X) = <<A; B, C, D>>
 """
 
 import sys
-from common_findif import delta, process_pt
+from .common_findif import delta, process_pt
 
 file_of_functionals = sys.argv.pop()
 A, B, C, X = sys.argv[1:]

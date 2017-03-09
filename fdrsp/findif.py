@@ -6,7 +6,7 @@ with finite field differentiation
 import subprocess
 import math
 import multiprocessing
-from errors import MolError
+from .errors import MolError
 
 
 class FinDif(object):

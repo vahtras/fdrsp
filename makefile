@@ -11,7 +11,7 @@ test_findif.tgz: test_findif.html $(LOGFILES)
 	
 
 test_findif.html: $(LOGFILES) hf_availfun
-	./makehtml.py $(LOGFILES)
+	python -m fdrsp.makehtml $(LOGFILES)
 
 .SUFFIXES: .py .log
 
@@ -25,6 +25,6 @@ clean:
 	rm  -rvf $(DIRFILES)
  
 test:
-	python -m pytest test_*.py
+	python -m pytest tests
 debug:
-	python -m pytest test_rspcalc.py test_html.py --pdb
+	python -m pytest tests --pdb

@@ -7,7 +7,7 @@ else
     echo $1 > $funcfile
 fi
 export TMPDIR=$(python -c 'import tempfile; print(tempfile.mkdtemp())')
-./gen_findif_all.py XXQUADRU YYQUADRU ZZQUADRU YDIPLEN $funcfile
+python -m fdrsp.gen_findif_all XXQUADRU YYQUADRU ZZQUADRU YDIPLEN $funcfile
 echo "HF" > hf_availfun
 cat $funcfile >> hf_availfun
 make

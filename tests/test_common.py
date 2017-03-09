@@ -1,17 +1,16 @@
-import common_findif
 import mock
+from . import fdrsp
 
 
-@mock.patch('common_findif.open')
+@mock.patch('fdrsp.common_findif.open')
 def test_hf_dft(mock_open):
     runfile = mock.MagicMock()
     templates = {'key': '@pytest.mark.parametrize("functional", [%s])<...>'}
     mock_open().__enter__.return_value = runfile
 
-    common_findif.process_pt(templates, ["LDA", "LYP*"])
+    fdrsp.common_findif.process_pt(templates, ["LDA", "LYP*"])
 
     runfile.write.assert_has_calls([
-        mock.call(common_findif.setup),
+        mock.call(fdrsp.common_findif.setup),
         mock.call('@pytest.mark.parametrize("functional", ["HF", "LDA", "LYP*"])<...>'),
-        #mock.call(common_findif.main)
         ])

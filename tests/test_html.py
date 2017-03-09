@@ -1,8 +1,9 @@
 import pytest
-import mock
 import pandas as pd
 import pandas.util.testing as pdt
-import makehtml
+
+from . import fdrsp
+from fdrsp import makehtml
 
 def  test_head():
     assert makehtml.head('/a/b/c') == '/a/b'

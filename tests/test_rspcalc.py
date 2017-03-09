@@ -2,8 +2,10 @@
 
 import pytest
 import mock
-from findif import RspCalc, last_float
-from errors import MolError
+
+from . import fdrsp
+from fdrsp.findif import RspCalc, last_float
+from fdrsp.errors import MolError
 
 
 def test_z_setup():
@@ -216,8 +218,8 @@ def test_dal_under():
     assert RspCalc(wf='1/4')._dal_ == '1_4'
     assert RspCalc(wf='1 4')._dal_ == '1_4'
 
-@mock.patch('findif.open')
-@mock.patch('findif.subprocess.call')
+@mock.patch('fdrsp.findif.open')
+@mock.patch('fdrsp.findif.subprocess.call')
 def test_call(mock_call, mock_open):
     calc = RspCalc(wf='yo', mol='yo')
 
@@ -232,7 +234,7 @@ def test_call(mock_call, mock_open):
         stdout=mock_file, stderr=mock_file, shell=True)
 
 
-@mock.patch('findif.open')
+@mock.patch('fdrsp.findif.open')
 def test_read_energy(mock_open):
 
     output_line = "Final energy: 3.14"
@@ -256,7 +258,7 @@ def mock_loop(output_line):
     return mock_file
 
 
-@mock.patch('findif.open')
+@mock.patch('fdrsp.findif.open')
 def test_read_z(mock_open):
 
     output_line = "YDIPLEN  total        :    -1.03702475"
@@ -265,7 +267,7 @@ def test_read_z(mock_open):
     calc = RspCalc('YDIPLEN')
     assert calc.get_output() ==  -1.03702475
 
-@mock.patch('findif.open')
+@mock.patch('fdrsp.findif.open')
 def test_read_yz(mock_open):
 
     output_line = "@ -<< XXQUADRU ; YDIPLEN  >> =  4.395689062431D-01"
@@ -274,7 +276,7 @@ def test_read_yz(mock_open):
     calc = RspCalc('XXQUADRU', 'YDIPLEN')
     assert calc.get_output() == -4.395689062431e-01
 
-@mock.patch('findif.open')
+@mock.patch('fdrsp.findif.open')
 def test_read_xyz(mock_open):
 
     output_line = "@ omega B, omega C, QR value :     0.00000000     0.00000000 3.68627919"
@@ -283,7 +285,7 @@ def test_read_xyz(mock_open):
     calc = RspCalc('XDIPLEN', 'YDIPLEN', 'ZDIPLEN')
     assert calc.get_output() ==  3.68627919
 
-@mock.patch('findif.open')
+@mock.patch('fdrsp.findif.open')
 def test_read_xyz(mock_open):
 
     output_line = "@ << A; B, C, D >>  =         -30.99202444"
