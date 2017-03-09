@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""Generate a set of test scipts to pass through nosetests
+"""Generate a set of test scipts to pass through pytest
 
-Tests finite field tests of expectation values
+Tests finite field tests of response functions
 
 Usage:
 ./gen_findif_cr.py A B C X file_of_functionals
