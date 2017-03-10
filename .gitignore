@@ -6,6 +6,6 @@ hf_availfun
 test_findif_*.py
 .cache
 test_findif.html
-test_findif.tgz
+*.tgz
 venv*
 .vimrc
