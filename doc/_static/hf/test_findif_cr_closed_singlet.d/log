@@ -1,19 +1,22 @@
-found /tmp and DALTON_TMPDIR set to /tmp
 
-   ***************************************** 
-   **** OUTPUT FROM DALTON SHELL SCRIPT **** 
-   ***************************************** 
+   ******************************************* 
+   **** OUTPUT FROM DALTON SHELL SCRIPT
+   ******************************************* 
 
-   DALTON release 2013.0
+   DALTON release Dalton2017.alpha (2016)
 
-   Invocation: /home/olav/dev/dalton/git/build/master/dalton -N 4 -d -t /tmp/ExpVal_hf hf
+   Invocation: /home/olav/dev/daltonprogram/dalton/build/fdrsp/dalton -N 8 -d -t /tmp/ExpVal_HF HF
 
-   ons 18 dec+ 2013 11.18.+57 CET
+   fre 10 mar 2017 11:56:15 CET
 
-   Calculation: hf  (input files: hf.dal and hf.mol)
-   PID        : 15927
-   Input dir  : /tmp/fdrsp/test_findif_cr_closed_singlet.d
-   Scratch dir: /tmp/ExpVal_hf/DALTON_scratch_olav/hf
+   Calculation: HF  (input files: HF.dal and HF.mol)
+   PID        : 13856
+   Input dir  : /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d
+   Scratch dir: /tmp/ExpVal_HF/DALTON_scratch_olav/HF_13856
+
+
+ INFO : OMP_NUM_THREADS set to 1 because it was not defined by user
+ INFO : and the cores are probably used by MPI
 
 
  output from the communication group generator:
@@ -24,20 +27,30 @@ found /tmp and DALTON_TMPDIR set to /tmp
 
  DALTON: master work memory size also used for slaves.            64000000
 
- Work memory size (LMWORK+2):    64000002 =  488.28 megabytes; node   1
-
-   1: Directories for basis set searches:
-     /tmp/fdrsp/test_findif_cr_closed_singlet.d:/home/olav/dev/dalton/git/build/master/basis
 
  Work memory size (LMWORK+2):    64000002 =  488.28 megabytes; node   0
 
    0: Directories for basis set searches:
-     /tmp/fdrsp/test_findif_cr_closed_singlet.d:/home/olav/dev/dalton/git/build/master/basis
-Backup: renaming /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.tar.gz.0 to /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.tar.gz.1
-Backup: renaming /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.tar.gz to /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.tar.gz.0
-hf.tar.gz has been copied to /tmp/fdrsp/test_findif_cr_closed_singlet.d
-Backup: renaming /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.out.0 to /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.out.1
-Backup: renaming /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.out to /tmp/fdrsp/test_findif_cr_closed_singlet.d/hf.out.0
+     /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d:/home/olav/dev/daltonprogram/dalton/build/fdrsp/basis
+ Work memory size (LMWORK+2):    64000002 =  488.28 megabytes; node   1
 
-   ons 18 dec+ 2013 11.18.+59 CET
+   1: Directories for basis set searches:
+     /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d:/home/olav/dev/daltonprogram/dalton/build/fdrsp/basis
+
+ NOTE:    1 warnings have been issued.
+ Check output, result, and error files for "WARNING".
+Backup: renaming /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.tar.gz.0 to /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.tar.gz.1
+Backup: renaming /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.tar.gz to /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.tar.gz.0
+HF.tar.gz has been copied to /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d
+Backup: renaming /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.out.0 to /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.out.1
+Backup: renaming /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.out to /tmp/tmpsz_vlD/test_findif_cr_closed_singlet.d/HF.out.0
+----------------------------------------------------------
+4 WARNINGS have been issued by DALTON,
+output from 'grep -n -i WARNING'  (max 10 warnings):
+255:@ WARNING - deprecated old .mol fixed format input has been detected:
+257:@ WARNING - this input format may not be supported in future releases.
+671: NOTE:    1 warnings have been issued.
+672: Check output, result, and error files for "WARNING".
+
+   fre 10 mar 2017 11:56:15 CET
    ***************************************** 

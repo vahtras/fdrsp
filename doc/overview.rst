@@ -21,6 +21,11 @@ A bash script witch takes a functional name or file with list of functionals
 in addition to given functionals a reference HF calculation will be done at all levels
 ::
 
+    makefile
+    
+performs all tests using a rule for `.py -> .log` files
+::
+
     fdrsp/gen_findif_all.py
 
 contains templates for test cases to be executed with ``pytest``.
@@ -35,12 +40,6 @@ contains data common to all tests and Used by ``gen_findif_all.py``
     fdrsp/mol.py
 
 A reference molecule used for all calculations
-::
-
-    makefile
-    
-performs all tests using a rule for `.py -> .log` files
-
 ::
 
     fdrsp/findif.py

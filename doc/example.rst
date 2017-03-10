@@ -11,81 +11,114 @@ The results will be the file `test_findif.html <_static/hf/test_findif.html>`_
 ::
 
     $ ./submitall
-    nosetests -v test_findif_ev_closed_singlet.py 2>&1 | tee test_findif_ev_closed_singlet.log
-    test_findif_ev_closed_singlet.test_findif_HF ... ok
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 4.324s
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_ev_closed_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_ev_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_ev_open_singlet.py 2>&1 | tee test_findif_ev_open_singlet.log
-    test_findif_ev_open_singlet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_ev_closed_singlet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 4.601s
+    =========================== 1 passed in 0.97 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_ev_open_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_ev_open_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_lr_closed_singlet.py 2>&1 | tee test_findif_lr_closed_singlet.log
-    test_findif_lr_closed_singlet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_ev_open_singlet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 5.798s
+    =========================== 1 passed in 0.67 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_lr_closed_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_lr_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_lr_open_singlet.py 2>&1 | tee test_findif_lr_open_singlet.log
-    test_findif_lr_open_singlet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_lr_closed_singlet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 5.680s
+    =========================== 1 passed in 0.72 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_lr_open_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_lr_open_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_lr_open_triplet.py 2>&1 | tee test_findif_lr_open_triplet.log
-    test_findif_lr_open_triplet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_lr_open_singlet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 5.764s
+    =========================== 1 passed in 0.76 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_lr_open_triplet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_lr_open_triplet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_qr_closed_singlet.py 2>&1 | tee test_findif_qr_closed_singlet.log
-    test_findif_qr_closed_singlet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_lr_open_triplet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 4.638s
+    =========================== 1 passed in 0.75 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_qr_closed_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_qr_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_qr_closed_triplet.py 2>&1 | tee test_findif_qr_closed_triplet.log
-    test_findif_qr_closed_triplet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_qr_closed_singlet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 4.620s
+    =========================== 1 passed in 0.86 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_qr_closed_triplet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_qr_closed_triplet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_qr_open_singlet.py 2>&1 | tee test_findif_qr_open_singlet.log
-    test_findif_qr_open_singlet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_qr_closed_triplet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 7.031s
+    =========================== 1 passed in 0.94 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_qr_open_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_qr_open_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_qr_open_triplet.py 2>&1 | tee test_findif_qr_open_triplet.log
-    test_findif_qr_open_triplet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_qr_open_singlet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 2.554s
+    =========================== 1 passed in 0.86 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_qr_open_triplet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_qr_open_triplet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    nosetests -v test_findif_cr_closed_singlet.py 2>&1 | tee test_findif_cr_closed_singlet.log
-    test_findif_cr_closed_singlet.test_findif_HF ... ok
+    ../../../../tmp/tmpgqMM9I/test_findif_qr_open_triplet.py::test_findif_generic[HF] PASSED
 
-    ----------------------------------------------------------------------
-    Ran 1 test in 9.719s
+    =========================== 1 passed in 0.85 seconds ===========================
+    python -m pytest  -v /tmp/tmpgqMM9I/test_findif_cr_closed_singlet.py 2>&1 | tee /tmp/tmpgqMM9I/test_findif_cr_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpgqMM9I/.cache
+    rootdir: /tmp/tmpgqMM9I, inifile: 
+    collecting ... collected 1 items
 
-    OK
-    ./makehtml.py test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log
-    tar cfz test_findif.tgz test_findif.html test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log test_findif_ev_closed_singlet.d test_findif_ev_open_singlet.d test_findif_lr_closed_singlet.d test_findif_lr_open_singlet.d test_findif_lr_open_triplet.d test_findif_qr_closed_singlet.d test_findif_qr_closed_triplet.d test_findif_qr_open_singlet.d test_findif_qr_open_triplet.d test_findif_cr_closed_singlet.d
+    ../../../../tmp/tmpgqMM9I/test_findif_cr_closed_singlet.py::test_findif_generic[HF] PASSED
 
-    For an overview of results open file:///tmp/fdrsp/test_findif.html in your browser
-    Results, output and logfiles are saved in compressed archive test_findif.tgz
+    =========================== 1 passed in 1.10 seconds ===========================
+    python -m fdrsp.makehtml  /tmp/tmpgqMM9I/test_findif_ev_closed_singlet.log  /tmp/tmpgqMM9I/test_findif_ev_open_singlet.log  /tmp/tmpgqMM9I/test_findif_lr_closed_singlet.log  /tmp/tmpgqMM9I/test_findif_lr_open_singlet.log  /tmp/tmpgqMM9I/test_findif_lr_open_triplet.log  /tmp/tmpgqMM9I/test_findif_qr_closed_singlet.log  /tmp/tmpgqMM9I/test_findif_qr_closed_triplet.log  /tmp/tmpgqMM9I/test_findif_qr_open_singlet.log  /tmp/tmpgqMM9I/test_findif_qr_open_triplet.log  /tmp/tmpgqMM9I/test_findif_cr_closed_singlet.log
+    cp test_findif.html /tmp/tmpgqMM9I
+    cp -r dist /tmp/tmpgqMM9I
+    tar -C /tmp/tmpgqMM9I -caf test_findif.tgz .
+
+For an overview of results open file:///home/olav/dev/fdrsp/test_findif.html in your browser
+Results, output and logfiles are saved in compressed archive test_findif.tgz
 
 Hartree-Fock and LDA
 --------------------
@@ -95,108 +128,123 @@ Here a failing test generates a link to the corresponding output file.
 
 ::
 
-    ./submitall LDA
-    nosetests -v test_findif_ev_closed_singlet.py 2>&1 | tee test_findif_ev_closed_singlet.log
-    test_findif_ev_closed_singlet.test_findif_HF ... ok
-    test_findif_ev_closed_singlet.test_findif_LDA ... ok
+    $ ./submitall LDA
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_ev_closed_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_ev_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 14.239s
+    ../../../../tmp/tmpPGIiKt/test_findif_ev_closed_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_ev_closed_singlet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_ev_open_singlet.py 2>&1 | tee test_findif_ev_open_singlet.log
-    test_findif_ev_open_singlet.test_findif_HF ... ok
-    test_findif_ev_open_singlet.test_findif_LDA ... ok
+    =========================== 2 passed in 2.75 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_ev_open_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_ev_open_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 26.278s
+    ../../../../tmp/tmpPGIiKt/test_findif_ev_open_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_ev_open_singlet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_lr_closed_singlet.py 2>&1 | tee test_findif_lr_closed_singlet.log
-    test_findif_lr_closed_singlet.test_findif_HF ... ok
-    test_findif_lr_closed_singlet.test_findif_LDA ... ok
+    =========================== 2 passed in 3.59 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_lr_closed_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_lr_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 15.838s
+    ../../../../tmp/tmpPGIiKt/test_findif_lr_closed_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_lr_closed_singlet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_lr_open_singlet.py 2>&1 | tee test_findif_lr_open_singlet.log
-    test_findif_lr_open_singlet.test_findif_HF ... ok
-    test_findif_lr_open_singlet.test_findif_LDA ... ok
+    =========================== 2 passed in 3.40 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_lr_open_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_lr_open_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 19.845s
+    ../../../../tmp/tmpPGIiKt/test_findif_lr_open_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_lr_open_singlet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_lr_open_triplet.py 2>&1 | tee test_findif_lr_open_triplet.log
-    test_findif_lr_open_triplet.test_findif_HF ... ok
-    test_findif_lr_open_triplet.test_findif_LDA ... ok
+    =========================== 2 passed in 4.54 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_lr_open_triplet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_lr_open_triplet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 19.687s
+    ../../../../tmp/tmpPGIiKt/test_findif_lr_open_triplet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_lr_open_triplet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_qr_closed_singlet.py 2>&1 | tee test_findif_qr_closed_singlet.log
-    test_findif_qr_closed_singlet.test_findif_HF ... ok
-    test_findif_qr_closed_singlet.test_findif_LDA ... ok
+    =========================== 2 passed in 4.65 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_qr_closed_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_qr_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 20.313s
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_closed_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_closed_singlet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_qr_closed_triplet.py 2>&1 | tee test_findif_qr_closed_triplet.log
-    test_findif_qr_closed_triplet.test_findif_HF ... ok
-    test_findif_qr_closed_triplet.test_findif_LDA ... ok
+    =========================== 2 passed in 7.24 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_qr_closed_triplet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_qr_closed_triplet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 21.235s
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_closed_triplet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_closed_triplet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_qr_open_singlet.py 2>&1 | tee test_findif_qr_open_singlet.log
-    test_findif_qr_open_singlet.test_findif_HF ... ok
-    test_findif_qr_open_singlet.test_findif_LDA ... ok
+    =========================== 2 passed in 6.22 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_qr_open_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_qr_open_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 43.218s
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_open_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_open_singlet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_qr_open_triplet.py 2>&1 | tee test_findif_qr_open_triplet.log
-    test_findif_qr_open_triplet.test_findif_HF ... ok
-    test_findif_qr_open_triplet.test_findif_LDA ... ok
+    ========================== 2 passed in 11.64 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_qr_open_triplet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_qr_open_triplet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 37.765s
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_open_triplet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_qr_open_triplet.py::test_findif_generic[LDA] PASSED
 
-    OK
-    nosetests -v test_findif_cr_closed_singlet.py 2>&1 | tee test_findif_cr_closed_singlet.log
-    test_findif_cr_closed_singlet.test_findif_HF ... ok
-    test_findif_cr_closed_singlet.test_findif_LDA ... ERROR
+    ========================== 2 passed in 11.91 seconds ===========================
+    python -m pytest  -v /tmp/tmpPGIiKt/test_findif_cr_closed_singlet.py 2>&1 | tee /tmp/tmpPGIiKt/test_findif_cr_closed_singlet.log
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+    cachedir: ../../../../tmp/tmpPGIiKt/.cache
+    rootdir: /tmp/tmpPGIiKt, inifile: 
+    collecting ... collected 2 items
 
-    ======================================================================
-    ERROR: test_findif_cr_closed_singlet.test_findif_LDA
-    ----------------------------------------------------------------------
-    Traceback (most recent call last):
-      File "/usr/lib/python2.7/dist-packages/nose/case.py", line 197, in runTest
-        self.test(*self.arg)
-      File "/tmp/fdrsp/test_findif_cr_closed_singlet.py", line 41, in test_findif_LDA
-        cr = RspCalc('XXQUADRU', 'YYQUADRU', 'ZZQUADRU', 'YDIPLEN', wf=wf, dal=dal, mol=inp["h2o"]).exe()
-      File "/tmp/fdrsp/findif.py", line 200, in exe
-        raise ValueError
-    ValueError: 
-    -------------------- >> begin captured stdout << ---------------------
-    Dalton called OK
-    Dalton called OK
-    Dalton called OK
+    ../../../../tmp/tmpPGIiKt/test_findif_cr_closed_singlet.py::test_findif_generic[HF] PASSED
+    ../../../../tmp/tmpPGIiKt/test_findif_cr_closed_singlet.py::test_findif_generic[LDA] PASSED
 
-    --------------------- >> end captured stdout << ----------------------
+    ========================== 2 passed in 10.07 seconds ===========================
+    python -m fdrsp.makehtml  /tmp/tmpPGIiKt/test_findif_ev_closed_singlet.log  /tmp/tmpPGIiKt/test_findif_ev_open_singlet.log  /tmp/tmpPGIiKt/test_findif_lr_closed_singlet.log  /tmp/tmpPGIiKt/test_findif_lr_open_singlet.log  /tmp/tmpPGIiKt/test_findif_lr_open_triplet.log  /tmp/tmpPGIiKt/test_findif_qr_closed_singlet.log  /tmp/tmpPGIiKt/test_findif_qr_closed_triplet.log  /tmp/tmpPGIiKt/test_findif_qr_open_singlet.log  /tmp/tmpPGIiKt/test_findif_qr_open_triplet.log  /tmp/tmpPGIiKt/test_findif_cr_closed_singlet.log
+    cp test_findif.html /tmp/tmpPGIiKt
+    cp -r dist /tmp/tmpPGIiKt
+    tar -C /tmp/tmpPGIiKt -caf test_findif.tgz .
 
-    ----------------------------------------------------------------------
-    Ran 2 tests in 31.149s
-
-    FAILED (errors=1)
-    ./makehtml.py test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log
-    tar cfz test_findif.tgz test_findif.html test_findif_ev_closed_singlet.log test_findif_ev_open_singlet.log test_findif_lr_closed_singlet.log test_findif_lr_open_singlet.log test_findif_lr_open_triplet.log test_findif_qr_closed_singlet.log test_findif_qr_closed_triplet.log test_findif_qr_open_singlet.log test_findif_qr_open_triplet.log test_findif_cr_closed_singlet.log test_findif_ev_closed_singlet.d test_findif_ev_open_singlet.d test_findif_lr_closed_singlet.d test_findif_lr_open_singlet.d test_findif_lr_open_triplet.d test_findif_qr_closed_singlet.d test_findif_qr_closed_triplet.d test_findif_qr_open_singlet.d test_findif_qr_open_triplet.d test_findif_cr_closed_singlet.d dist
-
-    For an overview of results open file:///tmp/fdrsp/test_findif.html in your browser
+    For an overview of results open file:///home/olav/dev/fdrsp/test_findif.html in your browser
     Results, output and logfiles are saved in compressed archive test_findif.tgz
+
 

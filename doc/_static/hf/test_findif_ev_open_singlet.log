@@ -1,6 +1,9 @@
-test_findif_ev_open_singlet.test_findif_HF ... ok
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.12, pytest-2.8.7, py-1.4.31, pluggy-0.3.1 -- /usr/bin/python
+cachedir: ../../../../tmp/tmpsz_vlD/.cache
+rootdir: /tmp/tmpsz_vlD, inifile: 
+collecting ... collected 1 items
 
-----------------------------------------------------------------------
-Ran 1 test in 5.475s
+../../../../tmp/tmpsz_vlD/test_findif_ev_open_singlet.py::test_findif_generic[HF] PASSED
 
-OK
+=========================== 1 passed in 0.72 seconds ===========================
