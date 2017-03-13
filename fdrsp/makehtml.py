@@ -12,7 +12,7 @@ def main(*logfiles):
     dirs = get_dirs(logfiles)
     allfiles = [open('hf_availfun')] + [open(log) for log in logfiles]
 
-    header = ["Functional"] + ['<a href="%s">%s</a>'%(tail(file_to_html(log)), short(log)) for log in logfiles]
+    header = ["Functional"] + ['<a href="%s">%s</a>'%(file_to_html(log), short(log)) for log in logfiles]
 
     with open('test_findif.html', 'w') as htmlfile:
         htmlfile.write(html_head('Dalton testing', 'Finite field tests of DFT response functions'))
@@ -34,7 +34,7 @@ def tail(path):
 def file_to_html(fname):
     hname = fname + ".html"
     with open(hname, 'w') as html:
-        html.write(html_head(h2=fname))
+        html.write(html_head(h2=tail(fname)))
         html.write("<pre>")
         html.write(open(fname).read())
         html.write("</pre>")
@@ -47,7 +47,7 @@ def short(log):
    log_header = log_file_root.split('test_findif_')[1]
    return log_header
 
-def html_head(h1="", h2=""):
+def html_head(h1="", h2="", container=""):
     return """
 <!DOCTYPE html>
 <html>
@@ -56,6 +56,7 @@ def html_head(h1="", h2=""):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,9 +65,9 @@ def html_head(h1="", h2=""):
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body><div class="container">
+  <body><div class="container%s">
     <h1>%s</h1><h2>%s</h2>
-""" % (h1, h2)
+""" % (container, h1, h2)
 
 def root(path):
     return os.path.splitext(path)[0]
@@ -103,11 +104,11 @@ def files_to_html(*fnames):
     hname = fnames[0] + ".html"
     col_width= 12 // len(fnames)
     with open(hname, 'w') as html:
-        html.write(html_head())
+        html.write(html_head(container="-fluid"))
         for f in fnames:
             html.write(
                 "<div class='col-md-%d'>" % col_width + \
-                "<h2>%s</h2>" % f +\
+                "<h2>%s</h2>" % tail(f) +\
                 "<pre>" + \
                 open(f).read() + \
                 "</pre></div>"
