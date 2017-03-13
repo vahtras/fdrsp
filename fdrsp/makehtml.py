@@ -6,6 +6,7 @@ import datetime
 import pandas
 pandas.set_option('display.max_colwidth', -1)
 
+
 def main(*logfiles):
     tmp = os.environ['TMPDIR']
 
@@ -14,7 +15,7 @@ def main(*logfiles):
 
     header = ["Functional"] + ['<a href="%s">%s</a>'%(file_to_html(log), short(log)) for log in logfiles]
 
-    with open('test_findif.html', 'w') as htmlfile:
+    with open(os.path.join(tmp, 'test_findif.html'), 'w') as htmlfile:
         htmlfile.write(html_head('Dalton testing', 'Finite field tests of DFT response functions'))
         htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
         with open(root(logfiles[0]) + ".d/HF.out") as hfout:

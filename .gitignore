@@ -9,3 +9,4 @@ test_findif.html
 *.tgz
 venv*
 .vimrc
+*.egg-info
