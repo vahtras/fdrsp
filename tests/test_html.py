@@ -32,8 +32,8 @@ collecting ... collected 2 items
 """.strip().split('\n')
 
     ref_status = pd.Series(
-        ['<a href="test_findif_ev_closed_singlet.d/HF.out.html">PASSED</a>', 
-         '<a href="test_findif_ev_closed_singlet.d/LDA.out.html">PASSED</a>'],
+        ['<a href=".../test_findif_ev_closed_singlet.d/HF.out.html">PASSED</a>', 
+         '<a href=".../test_findif_ev_closed_singlet.d/LDA.out.html">PASSED</a>'],
         index=["HF", "LDA"]
     )
 
@@ -41,14 +41,14 @@ collecting ... collected 2 items
     pdt.assert_series_equal(status, ref_status)
     mock_to_html.assert_has_calls([
         mock.call(
-            'test_findif_ev_closed_singlet.d/HF.out',
-             'test_findif_ev_closed_singlet.d/HF.out.0',
-             'test_findif_ev_closed_singlet.d/HF.out.1'
+            '.../test_findif_ev_closed_singlet.d/HF.out',
+             '.../test_findif_ev_closed_singlet.d/HF.out.0',
+             '.../test_findif_ev_closed_singlet.d/HF.out.1'
         ),
         mock.call(
-            'test_findif_ev_closed_singlet.d/LDA.out',
-            'test_findif_ev_closed_singlet.d/LDA.out.0',
-            'test_findif_ev_closed_singlet.d/LDA.out.1'),
+            '.../test_findif_ev_closed_singlet.d/LDA.out',
+            '.../test_findif_ev_closed_singlet.d/LDA.out.0',
+            '.../test_findif_ev_closed_singlet.d/LDA.out.1'),
     ])
 
 

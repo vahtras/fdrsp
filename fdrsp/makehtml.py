@@ -86,7 +86,7 @@ def collect_status_column_pt(loglines):
     status_tag = "::test_findif_"
     tmppath_testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
     functionals = [get_functional(line[1]) for line in tmppath_testcase_status]
-    outputs = [root(tail(t[0])) + ".d/%s.out" % canonical(f) for t,f in zip(tmppath_testcase_status, functionals)]
+    outputs = [root(t[0]) + ".d/%s.out" % canonical(f) for t,f in zip(tmppath_testcase_status, functionals)]
     generate_outputs_side_by_side_as_html(*outputs)
     outputs_html = [o + '.html' for o in outputs]
     status = [
