@@ -93,7 +93,7 @@ def test_files_to_html(mock_open):
     html = makehtml.files_to_html('yo1', 'yo2', 'yo3')
 
     mock_html.write.assert_has_calls([
-        mock.call(makehtml.html_head()),
+        mock.call(makehtml.html_head(container="-fluid")),
         mock.call("<div class='col-md-4'><h2>yo1</h2><pre>file1 contents</pre></div>"),
         mock.call("<div class='col-md-4'><h2>yo2</h2><pre>file2 contents</pre></div>"),
         mock.call("<div class='col-md-4'><h2>yo3</h2><pre>file3 contents</pre></div>"),
