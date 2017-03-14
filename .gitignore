@@ -10,3 +10,4 @@ test_findif.html
 venv*
 .vimrc
 *.egg-info
+errors.err
