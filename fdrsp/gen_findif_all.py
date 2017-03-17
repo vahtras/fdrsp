@@ -12,7 +12,7 @@ Checks d<<A; B, C>>/dx(X) = <<A; B, C, D>>
 import sys
 from .common_findif import delta, process_pt
 
-def main(argv):
+def main(*argv, **config):
     A, B, C, X, file_of_functionals = argv
 
     #
@@ -28,7 +28,7 @@ def main(argv):
     #
 
 
-    process_pt(templates_pt, functionals)
+    process_pt(templates_pt, functionals, **config)
 
 def generate_templates(A, B, C, X):
 

@@ -57,8 +57,8 @@ def test_findif_generic(run_response):
 #
 # Process all runtypes and functionals defined in input file
 #
-def process_pt(template, functionals):
-    tmp = os.environ.get('TMPDIR', '/tmp')
+def process_pt(template, functionals, **config):
+    tmp = config.get('tmp', '/tmp')
     quoted = ['"%s"' % f for f in functionals]
     for runtype in template:
         with open(os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w') as runfile:

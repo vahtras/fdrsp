@@ -5,10 +5,11 @@ import re
 import datetime
 import pandas
 pandas.set_option('display.max_colwidth', -1)
+import pytest
 
 
-def main(*logfiles):
-    tmp = os.environ['TMPDIR']
+def main(*logfiles, **config):
+    tmp = config['tmp']
 
     dirs = get_dirs(logfiles)
     allfiles = [open('hf_availfun')] + [open(log) for log in logfiles]
@@ -20,7 +21,7 @@ def main(*logfiles):
         htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
         with open(root(logfiles[0]) + ".d/HF.out") as hfout:
             htmlfile.write('Git revision: %s<br>' % get_git_revision(hfout))
-        df = collect_status_table_pt(*logfiles)
+        df = collect_status_table_pt(*logfiles, **config)
         df.columns = header[1:]
         htmlfile.write(df.to_html(classes="table table-striped", escape=False))
         htmlfile.write('*A fraction of HF exchange was used to aid SCF convergence<br>')
@@ -56,8 +57,8 @@ def html_head(h1="", h2="", container=""):
     <title>Finite different tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="data/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../data/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,28 +79,31 @@ def get_git_revision(lines):
         if "Git" in line:
             return line.split('|')[1].strip()
 
-def collect_status_table_pt(*logs):
-    series = [collect_status_column_pt(open(log)) for log in logs]
+def collect_status_table_pt(*logs, **config):
+    series = [collect_status_column_pt(open(log), **config) for log in logs]
     df = pandas.concat(series, axis=1)
     df.columns=logs
     return df
 
-def collect_status_column_pt(loglines):
-    status_tag = "::test_findif_"
-    tmppath_testcase_status = [line.split(status_tag) for line in loglines if status_tag in line]
-    functionals = [get_functional(line[1]) for line in tmppath_testcase_status]
-    outputs = [root(t[0]) + ".d/%s.out" % canonical(f) for t,f in zip(tmppath_testcase_status, functionals)]
-    generate_outputs_side_by_side_as_html(*outputs)
+def collect_status_column_pt(loglines, **config):
+    STATUS = {'.': 'PASSED', 'F': 'FAILED', 'E': 'ERROR'}
+    status_testcase = [line.split() for line in loglines if '::' in line]
+    statuses = [STATUS[st[0]] for st in status_testcase]
+    testcases = [st[1] for st in status_testcase]
+    functionals = [get_functional(t) for t in testcases]
+    outputs = [root(t) + ".d/%s.out" % canonical(f) for t,f in zip(testcases, functionals)]
+    generate_outputs_side_by_side_as_html(*outputs, **config)
     outputs_html = [o + '.html' for o in outputs]
     status = [
-        '<a href="%s">%s</a>' % (t, s[1].split()[1])
-        for t, s in zip(outputs_html, tmppath_testcase_status)
+        '<a href="%s">%s</a>' % (o, s)
+        for o, s in zip(outputs_html, statuses)
         ]
     return pandas.Series(status, index=functionals)
 
-def generate_outputs_side_by_side_as_html(*outputs):
+def generate_outputs_side_by_side_as_html(*outputs, **config):
     for o in outputs:
-        files_to_html(o, o+".0", o+".1")
+        fo = os.path.join(config['tmp'], o)
+        files_to_html(fo, fo+".0", fo+".1")
 
 def files_to_html(*fnames):
     hname = fnames[0] + ".html"
@@ -129,7 +133,7 @@ def html_tail():
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="data/js/bootstrap.min.js"></script>
   </div></body>
 </html>
 '''

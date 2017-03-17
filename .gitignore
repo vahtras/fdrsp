@@ -7,7 +7,8 @@ test_findif_*.py
 .cache
 test_findif.html
 *.tgz
-venv*
+*venv*
 .vimrc
 *.egg-info
 errors.err
+build

@@ -22,33 +22,35 @@ def test_dirs():
 
 @mock.patch('fdrsp.makehtml.files_to_html')
 def test_collect_status_column_pt(mock_to_html):
+    status = {".": "PASSED", "F": "FAILED", "E": "ERROR"}
     input_lines = """
 collecting ... collected 2 items
 
-.../test_findif_ev_closed_singlet.py::test_findif_generic[HF] PASSED
-.../test_findif_ev_closed_singlet.py::test_findif_generic[LDA] PASSED
+. test_findif_lr_open_triplet.py::test_findif_generic[HF]
+. test_findif_lr_open_triplet.py::test_findif_generic[LDA]
 
 =========================== 2 passed in 3.63 seconds ===========================
 """.strip().split('\n')
 
     ref_status = pd.Series(
-        ['<a href=".../test_findif_ev_closed_singlet.d/HF.out.html">PASSED</a>', 
-         '<a href=".../test_findif_ev_closed_singlet.d/LDA.out.html">PASSED</a>'],
+        ['<a href="test_findif_lr_open_triplet.d/HF.out.html">PASSED</a>', 
+         '<a href="test_findif_lr_open_triplet.d/LDA.out.html">PASSED</a>'],
         index=["HF", "LDA"]
     )
 
-    status = makehtml.collect_status_column_pt(input_lines)
+    status = makehtml.collect_status_column_pt(input_lines, tmp='...')
+
     pdt.assert_series_equal(status, ref_status)
     mock_to_html.assert_has_calls([
         mock.call(
-            '.../test_findif_ev_closed_singlet.d/HF.out',
-             '.../test_findif_ev_closed_singlet.d/HF.out.0',
-             '.../test_findif_ev_closed_singlet.d/HF.out.1'
+            '.../test_findif_lr_open_triplet.d/HF.out',
+             '.../test_findif_lr_open_triplet.d/HF.out.0',
+             '.../test_findif_lr_open_triplet.d/HF.out.1'
         ),
         mock.call(
-            '.../test_findif_ev_closed_singlet.d/LDA.out',
-            '.../test_findif_ev_closed_singlet.d/LDA.out.0',
-            '.../test_findif_ev_closed_singlet.d/LDA.out.1'),
+            '.../test_findif_lr_open_triplet.d/LDA.out',
+            '.../test_findif_lr_open_triplet.d/LDA.out.0',
+            '.../test_findif_lr_open_triplet.d/LDA.out.1'),
     ])
 
 
