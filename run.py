@@ -18,6 +18,10 @@ def main():
 
     args = parser.parse_args()
 
+    if not shutil.which('dalton'):
+        print('Dalton not in PATH')
+        sys.exit(1)
+
 
     if args.file:
         with open(args.file) as f:
