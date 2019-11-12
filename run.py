@@ -1,9 +1,9 @@
 #!/usr/bin/env python
+import webbrowser
 import sys
 import os
 import shutil
 import pytest
-import tempfile
 import glob
 import fdrsp.gen_findif_all
 import fdrsp.makehtml
@@ -24,20 +24,12 @@ def main():
 
     generate_test_files(**config)
 
-    # runtests
-    tests = glob.glob(os.path.join(config["tmp"], "test_findif*.py"))
-    logs = [os.path.splitext(test)[0] + ".log" for test in tests]
-    for test, log in zip(tests, logs):
-        pytest.main([test, "-v", "--resultlog", log])
+    logs = run_tests(**config)
 
-    # get files to html
-    fdrsp.makehtml.main(*logs, **config)
+    fdrsp.html(*logs, **config)
 
-    # copy stylefiles
-    shutil.copytree(
-        os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
-        os.path.join(config["tmp"], "data"),
-    )
+    if args.view:
+        view_logs(**config)
 
 
 def parse_input():
@@ -49,6 +41,9 @@ def parse_input():
     )
     parser.add_argument(
         "-f", "--file", help="Exchange-correlation functionals"
+    )
+    parser.add_argument(
+        "-v", "--view", action='store_true', help="View logs summary in browser"
     )
 
     args = parser.parse_args()
@@ -76,6 +71,22 @@ def generate_test_files(**config):
         "XXQUADRU", "YYQUADRU", "ZZQUADRU", "YDIPLEN", **config
     )
 
+
+def run_tests(**config):
+    tests = glob.glob(os.path.join(config["tmp"], "test_findif*.py"))
+    logs = [os.path.splitext(test)[0] + ".log" for test in tests]
+    for test, log in zip(tests, logs):
+        pytest.main([test, "-v", "--resultlog", log])
+    return logs
+
+
+def view_logs(**config):
+    # copy stylefiles
+    shutil.copytree(
+        os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
+        os.path.join(config["tmp"], "data"),
+    )
+    webbrowser.open_new_tab(os.path.join(config['tmp'], 'test_findif.html'))
 
 if __name__ == "__main__":
     sys.exit(main())

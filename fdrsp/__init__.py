@@ -1,7 +1,12 @@
 import tempfile
+from .makehtml import main as html
 
 
 class TmpDir:
+    """
+    A class following the Singleton pattern to yield
+    a unique temporary directory instance on each call
+    """
     _instance = None
 
     def __new__(cls):
