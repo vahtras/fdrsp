@@ -1,9 +1,9 @@
 _build
 *.pyc
 *.log
+*.html
 *.d
 tested_functionals
-test_findif_*.py
 .cache
 test_findif.html
 *.tgz
