@@ -1,27 +1,25 @@
 #!/usr/bin/env python
 import sys
 import os
-import re
 import datetime
 import pandas
 
 pandas.set_option("display.max_colwidth", -1)
-import pytest
 
 
 def main(*logfiles, **config):
     tmp = config["tmp"]
 
-    dirs = get_dirs(logfiles)
-    allfiles = [open(config["functional_file"])] + [open(log) for log in logfiles]
-
     header = ["Functional"] + [
-        '<a href="%s">%s</a>' % (file_to_html(log), short(log)) for log in logfiles
+        '<a href="%s">%s</a>' % (
+            file_to_html(log), short(log)
+        ) for log in logfiles
     ]
 
     with open(os.path.join(tmp, "test_findif.html"), "w") as htmlfile:
-        htmlfile.write(
-            html_head("Dalton testing", "Finite field tests of DFT response functions")
+        htmlfile.write(html_head(
+            "Dalton testing", "Finite field tests of DFT response functions"
+            )
         )
         htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
         with open(root(logfiles[0]) + ".d/HF.out") as hfout:
@@ -29,7 +27,9 @@ def main(*logfiles, **config):
         df = collect_status_table_pt(*logfiles, **config)
         df.columns = header[1:]
         htmlfile.write(df.to_html(classes="table table-striped", escape=False))
-        htmlfile.write("*A fraction of HF exchange was used to aid SCF convergence<br>")
+        htmlfile.write(
+            "*A fraction of HF exchange was used to aid SCF convergence<br>"
+            )
         htmlfile.write(html_tail())
 
 
@@ -66,19 +66,15 @@ def html_head(h1="", h2="", container=""):
   <head>
     <title>Finite different tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
+
     <link href="data/css/bootstrap.min.css" rel="stylesheet">
     <link href="../data/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
   </head>
-  <body><div class="container%s">
-    <h1>%s</h1><h2>%s</h2>
+  <body>
+      <div class="container%s">
+          <h1>%s</h1>
+          <h2>%s</h2>
 """ % (
         container,
         h1,
@@ -110,11 +106,15 @@ def collect_status_column_pt(loglines, **config):
     testcases = [st[1] for st in status_testcase]
     functionals = [get_functional(t) for t in testcases]
     outputs = [
-        root(t) + ".d/%s.out" % canonical(f) for t, f in zip(testcases, functionals)
+        root(t) + ".d/%s.out" % canonical(f)
+        for t, f in zip(testcases, functionals)
     ]
     generate_outputs_side_by_side_as_html(*outputs, **config)
     outputs_html = [o + ".html" for o in outputs]
-    status = ['<a href="%s">%s</a>' % (o, s) for o, s in zip(outputs_html, statuses)]
+    status = [
+        '<a href="%s">%s</a>' % (o, s)
+        for o, s in zip(outputs_html, statuses)
+    ]
     return pandas.Series(status, index=functionals)
 
 
@@ -153,9 +153,7 @@ def canonical(s):
 
 def html_tail():
     return """
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="data/js/bootstrap.min.js"></script>
   </div></body>
 </html>
