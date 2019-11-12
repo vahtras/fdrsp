@@ -218,11 +218,14 @@ def test_dal_under():
     assert RspCalc(wf='1/4')._dal_ == '1_4'
     assert RspCalc(wf='1 4')._dal_ == '1_4'
 
+
+@mock.patch('fdrsp.findif.multiprocessing.cpu_count')
 @mock.patch('fdrsp.findif.open')
 @mock.patch('fdrsp.findif.subprocess.call')
-def test_call(mock_call, mock_open):
+def test_call(mock_call, mock_open, mock_cpu_count):
     calc = RspCalc(wf='yo', mol='yo')
 
+    mock_cpu_count.return_value = 8
     mock_call.return_value = 0
     mock_file = mock.MagicMock()
     mock_open().__enter__.return_value = mock_file

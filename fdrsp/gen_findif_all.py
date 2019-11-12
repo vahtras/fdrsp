@@ -12,23 +12,24 @@ Checks d<<A; B, C>>/dx(X) = <<A; B, C, D>>
 import sys
 from .common_findif import delta, process_pt
 
+
 def main(*argv, **config):
-    A, B, C, X, file_of_functionals = argv
+    A, B, C, X, = argv
+    file_of_functionals = config['functional_file']
 
     #
     # Template for functional test calling findif module 
     #
     templates_pt = generate_templates(A, B, C, X)
 
-
-    functionals = [ line.strip() for line in open(file_of_functionals) ] 
+    functionals = [line.strip() for line in open(file_of_functionals)]
 
     #
     # Process all runtypes and functionals defined in input file
     #
 
-
     process_pt(templates_pt, functionals, **config)
+
 
 def generate_templates(A, B, C, X):
 

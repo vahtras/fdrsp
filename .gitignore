@@ -2,7 +2,7 @@ _build
 *.pyc
 *.log
 *.d
-hf_availfun
+tested_functionals
 test_findif_*.py
 .cache
 test_findif.html
@@ -12,3 +12,5 @@ test_findif.html
 *.egg-info
 errors.err
 build
+*.dot
+*.png

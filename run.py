@@ -9,56 +9,72 @@ import fdrsp.gen_findif_all
 import fdrsp.makehtml
 import fdrsp
 
+FUNCTIONALS = "tested_functionals"
+
+
 def main():
-    import argparse
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('xc', nargs='*', default=[], help='Exchange-correlation functionals')
-    parser.add_argument('-f', '--file', help='Exchange-correlation functionals')
+    config = {"tmp": fdrsp.TmpDir(), "functional_file": FUNCTIONALS}
 
-    args = parser.parse_args()
+    args = parse_input()
 
-    if not shutil.which('dalton'):
-        print('Dalton not in PATH')
-        sys.exit(1)
+    assert_dalton()
 
+    save_selected_functionals(args)
 
-    if args.file:
-        with open(args.file) as f:
-            funcs = f.read()
-        with open('hf_availfun', 'w') as hf_funcs:
-            hf_funcs.write(funcs)
-    elif args.xc:
-        with open('hf_availfun', 'w') as funcs:
-            funcs.write('\n'.join(args.xc))
-    else:
-        with open('hf_availfun', 'w') as funcs:
-            pass
+    generate_test_files(**config)
 
-
-    # generate test files
-    config = {'tmp': tempfile.mkdtemp()}
-    fdrsp.gen_findif_all.main('XXQUADRU','YYQUADRU','ZZQUADRU','YDIPLEN','hf_availfun', **config)
-        
     # runtests
-    tests = glob.glob(os.path.join(config['tmp'], 'test_findif*.py'))
-    logs = [os.path.splitext(test)[0] + '.log' for test in tests]
+    tests = glob.glob(os.path.join(config["tmp"], "test_findif*.py"))
+    logs = [os.path.splitext(test)[0] + ".log" for test in tests]
     for test, log in zip(tests, logs):
-        pytest.main([test, '-v', '--resultlog', log])
+        pytest.main([test, "-v", "--resultlog", log])
 
     # get files to html
     fdrsp.makehtml.main(*logs, **config)
 
     # copy stylefiles
     shutil.copytree(
-        os.path.join(
-            os.path.dirname(os.path.abspath(fdrsp.__file__)),
-            'data'
-        ),
-        os.path.join(config['tmp'], 'data')
+        os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
+        os.path.join(config["tmp"], "data"),
     )
-    
-    
+
+
+def parse_input():
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "xc", nargs="*", default=[], help="Exchange-correlation functionals"
+    )
+    parser.add_argument(
+        "-f", "--file", help="Exchange-correlation functionals"
+    )
+
+    args = parser.parse_args()
+    return args
+
+
+def assert_dalton():
+    if not shutil.which("dalton"):
+        print("Dalton not in PATH")
+        sys.exit(1)
+
+
+def save_selected_functionals(args):
+    with open(FUNCTIONALS, 'w') as funcs:
+        if args.file:
+            with open(args.file) as f:
+                funcs.write(f.read())
+        elif args.xc:
+            funcs.write("\n".join(args.xc))
+
+
+def generate_test_files(**config):
+    # generate test files
+    fdrsp.gen_findif_all.main(
+        "XXQUADRU", "YYQUADRU", "ZZQUADRU", "YDIPLEN", **config
+    )
 
 
 if __name__ == "__main__":

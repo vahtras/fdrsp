@@ -1,9 +1,10 @@
 import os
+from . import TmpDir
 #
 # Finite field strength
 #
 delta = 0.001
-rtol=1e-3
+rtol = 1e-3
 hfweight = 0.5
 #
 # Top part of script: setup
@@ -54,14 +55,17 @@ def test_findif_generic(run_response):
     assert_(e1, e2)
 """
 
+
 #
 # Process all runtypes and functionals defined in input file
 #
 def process_pt(template, functionals, **config):
-    tmp = config.get('tmp', '/tmp')
+    tmp = config.get('tmp', TmpDir())
     quoted = ['"%s"' % f for f in functionals]
     for runtype in template:
-        with open(os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w') as runfile:
+        with open(
+            os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w'
+                ) as runfile:
             runfile.write(setup)
             runfile.write(template[runtype] % ", ".join(['"HF"'] + quoted))
             runfile.write(generic_test)
