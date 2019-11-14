@@ -33,15 +33,3 @@ def test_select_functionals_on_file():
         run.save_selected_functionals(args)
         m.assert_called_with('ffile')
         m().write.assert_called_with('foo')
-
-
-def test_generate_test_files():
-    fdrsp.TmpDir._instance = '/tmp/foo'
-    m = mock.mock_open()
-    with mock.patch('fdrsp.common_findif.open', m, create=True):
-        run.generate_test_files(
-            functional_file='tested_functionals',
-            tmpdir=fdrsp.TmpDir(),
-        )
-        assert mock.call('/tmp/foo/test_findif_ev_closed_singlet.py', 'w')\
-            in m.mock_calls

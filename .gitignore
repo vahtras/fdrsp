@@ -14,3 +14,5 @@ errors.err
 build
 *.dot
 *.png
+.coverage
+htmlcov

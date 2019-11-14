@@ -11,7 +11,7 @@ hfweight = 0.5
 # Top part of script: setup
 #
 
-setup = """
+__setup = """
 import pytest
 import os
 import shutil
@@ -42,7 +42,7 @@ def setup_module():
     rtol,
 )
 
-setup += """
+__setup += """
 def dft(functional):
     if functional.upper() == 'HF':
         return functional
@@ -56,7 +56,7 @@ def dft(functional):
     1 - hfweight,
 )
 
-generic_test = """
+__generic_test = """
 def test_findif_generic(run_response):
     e1, e2 = run_response
     assert_(e1, e2)
@@ -66,7 +66,7 @@ def test_findif_generic(run_response):
 #
 # Process all runtypes and functionals defined in input file
 #
-def process_pt(template, functionals, **config):
+def __process_pt(template, functionals, **config):
     tmp = config.get("tmp", TmpDir())
     quoted = ['"%s"' % f for f in functionals]
     for runtype in template:

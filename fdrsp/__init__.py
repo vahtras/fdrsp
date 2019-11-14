@@ -1,5 +1,7 @@
 import tempfile
 
+from .makehtml import main as html
+
 
 class TmpDir:
     """
