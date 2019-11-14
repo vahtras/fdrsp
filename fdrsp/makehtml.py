@@ -113,8 +113,8 @@ def collect_status_column_pt(log, **config):
         for testcase in testsuite:
             if 'error' in testcase.attrib:
                 status = 'ERROR'
-            elif 'failure' in testcase.attrib:
-                status = 'FAIL'
+            elif 'failure' in [t.tag for t in testcase]:
+                status = 'FAILED'
             else:
                 status = 'PASSED'
             statuses.append(status)

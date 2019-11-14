@@ -30,24 +30,36 @@ def test_collect_status_column_pt(mock_to_html):
     <testsuites>
         <testsuite errors="0" failures="0" hostname="work" name="pytest" skipped="0" tests="2" time="1.403" timestamp="2019-11-14T10:25:36.528243">
             <testcase classname="dev.py.fdrsp.sample_tests.test_findif_ev_closed_singlet" file="dev/py/fdrsp/sample_tests/test_findif_ev_closed_singlet.py" line="9" name="test_run_response[HF]" time="0.440">
-            <system-out>Dalton called OK
-    Dalton called OK
-    Dalton called OK
-    Numerical  -1.0370241299995087
-    Analytical -1.03702475
-    Difference  6.20000491391437e-07
-    Target diff 0.00103703475
-            </system-out>
+                <system-out>Dalton called OK
+                    Dalton called OK
+                    Dalton called OK
+                    Numerical  -1.0370241299995087
+                    Analytical -1.03702475
+                    Difference  6.20000491391437e-07
+                    Target diff 0.00103703475
+                </system-out>
             </testcase>
             <testcase classname="dev.py.fdrsp.sample_tests.test_findif_ev_closed_singlet" file="dev/py/fdrsp/sample_tests/test_findif_ev_closed_singlet.py" line="9" name="test_run_response[slater]" time="0.954">
-            <system-out>Dalton called OK
-    Dalton called OK
-    Dalton called OK
-    Numerical  -0.9706091749990264
-    Analytical -0.97061019
-    Difference  1.0150009736031862e-06
-    Target diff 0.0009706201900000001
-            </system-out>
+                <system-out>Dalton called OK
+                    Dalton called OK
+                    Dalton called OK
+                    Numerical  -0.9706091749990264
+                    Analytical -0.97061019
+                    Difference  1.0150009736031862e-06
+                    Target diff 0.0009706201900000001
+                </system-out>
+            </testcase>
+            <testcase classname="dev.py.fdrsp.sample_tests.test_findif_ev_closed_singlet" file="dev/py/fdrsp/sample_tests/test_findif_ev_closed_singlet.py" line="9" name="test_run_response[b3lyp]" time="0.954">
+                <failure message="AssertionError">
+                </failure>
+                <system-out>Dalton called OK
+                    Dalton called OK
+                    Dalton called OK
+                    Numerical  -0.9706091749990264
+                    Analytical -0.97061019
+                    Difference  1.0150009736031862e-06
+                    Target diff 0.0009706201900000001
+                </system-out>
             </testcase>
         </testsuite>
     </testsuites>
@@ -57,8 +69,10 @@ def test_collect_status_column_pt(mock_to_html):
 
     ref_status = pd.Series(
         ['<a href="test_findif_ev_closed_singlet.d/HF.out.html">PASSED</a>',
-         '<a href="test_findif_ev_closed_singlet.d/slater.out.html">PASSED</a>'],
-        index=["HF", "slater"]
+         '<a href="test_findif_ev_closed_singlet.d/slater.out.html">PASSED</a>',
+         '<a href="test_findif_ev_closed_singlet.d/b3lyp.out.html">FAILED</a>'
+         ],
+        index=["HF", "slater", "b3lyp"]
     )
 
     status = fm.collect_status_column_pt('log_lines', tmp='...')
