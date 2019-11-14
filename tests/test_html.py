@@ -26,34 +26,54 @@ def test_dirs():
 @mock.patch('fdrsp.makehtml.files_to_html')
 def test_collect_status_column_pt(mock_to_html):
     status = {".": "PASSED", "F": "FAILED", "E": "ERROR"}
-    input_lines = """
-collecting ... collected 2 items
-
-. test_findif_lr_open_triplet.py::test_findif_generic[HF]
-. test_findif_lr_open_triplet.py::test_findif_generic[LDA]
-
-=========================== 2 passed in 3.63 seconds ==========================
-""".strip().split('\n')
+    log_lines = """<?xml version="1.0" encoding="utf-8"?>
+    <testsuites>
+        <testsuite errors="0" failures="0" hostname="work" name="pytest" skipped="0" tests="2" time="1.403" timestamp="2019-11-14T10:25:36.528243">
+            <testcase classname="dev.py.fdrsp.sample_tests.test_findif_ev_closed_singlet" file="dev/py/fdrsp/sample_tests/test_findif_ev_closed_singlet.py" line="9" name="test_run_response[HF]" time="0.440">
+            <system-out>Dalton called OK
+    Dalton called OK
+    Dalton called OK
+    Numerical  -1.0370241299995087
+    Analytical -1.03702475
+    Difference  6.20000491391437e-07
+    Target diff 0.00103703475
+            </system-out>
+            </testcase>
+            <testcase classname="dev.py.fdrsp.sample_tests.test_findif_ev_closed_singlet" file="dev/py/fdrsp/sample_tests/test_findif_ev_closed_singlet.py" line="9" name="test_run_response[slater]" time="0.954">
+            <system-out>Dalton called OK
+    Dalton called OK
+    Dalton called OK
+    Numerical  -0.9706091749990264
+    Analytical -0.97061019
+    Difference  1.0150009736031862e-06
+    Target diff 0.0009706201900000001
+            </system-out>
+            </testcase>
+        </testsuite>
+    </testsuites>
+"""
+    with open('log_lines', 'w') as f:
+        f.write(log_lines)
 
     ref_status = pd.Series(
-        ['<a href="test_findif_lr_open_triplet.d/HF.out.html">PASSED</a>',
-         '<a href="test_findif_lr_open_triplet.d/LDA.out.html">PASSED</a>'],
-        index=["HF", "LDA"]
+        ['<a href="test_findif_ev_closed_singlet.d/HF.out.html">PASSED</a>',
+         '<a href="test_findif_ev_closed_singlet.d/slater.out.html">PASSED</a>'],
+        index=["HF", "slater"]
     )
 
-    status = fm.collect_status_column_pt(input_lines, tmp='...')
+    status = fm.collect_status_column_pt('log_lines', tmp='...')
 
     pdt.assert_series_equal(status, ref_status)
     mock_to_html.assert_has_calls([
         mock.call(
-            '.../test_findif_lr_open_triplet.d/HF.out',
-            '.../test_findif_lr_open_triplet.d/HF.out.0',
-            '.../test_findif_lr_open_triplet.d/HF.out.1'
+            '.../test_findif_ev_closed_singlet.d/HF.out',
+            '.../test_findif_ev_closed_singlet.d/HF.out.0',
+            '.../test_findif_ev_closed_singlet.d/HF.out.1'
         ),
         mock.call(
-            '.../test_findif_lr_open_triplet.d/LDA.out',
-            '.../test_findif_lr_open_triplet.d/LDA.out.0',
-            '.../test_findif_lr_open_triplet.d/LDA.out.1'),
+            '.../test_findif_ev_closed_singlet.d/slater.out',
+            '.../test_findif_ev_closed_singlet.d/slater.out.0',
+            '.../test_findif_ev_closed_singlet.d/slater.out.1'),
     ])
 
 

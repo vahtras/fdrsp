@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import re
 import sys
 import os
 import datetime
@@ -93,18 +94,33 @@ def get_git_revision(lines):
 
 
 def collect_status_table_pt(*logs, **config):
-    series = [collect_status_column_pt(open(log), **config) for log in logs]
+    series = [collect_status_column_pt(log, **config) for log in logs]
     df = pandas.concat(series, axis=1)
     df.columns = logs
     return df
 
 
-def collect_status_column_pt(loglines, **config):
-    STATUS = {".": "PASSED", "F": "FAILED", "E": "ERROR"}
-    status_testcase = [line.split() for line in loglines if "::" in line]
-    statuses = [STATUS[st[0]] for st in status_testcase]
-    testcases = [st[1] for st in status_testcase]
-    functionals = [get_functional(t) for t in testcases]
+def collect_status_column_pt(log, **config):
+    import xml.etree.ElementTree as ET
+
+    tree = ET.parse(log)
+    testsuites = tree.getroot()
+
+    statuses = []
+    testcases = []
+    functionals = []
+    for testsuite in testsuites:
+        for testcase in testsuite:
+            if 'error' in testcase.attrib:
+                status = 'ERROR'
+            elif 'failure' in testcase.attrib:
+                status = 'FAIL'
+            else:
+                status = 'PASSED'
+            statuses.append(status)
+            testcases.append(testcase.attrib['classname'].split('.')[-1])
+            functionals.append(get_functional(testcase.attrib['name']))
+
     outputs = [
         root(t) + ".d/%s.out" % canonical(f)
         for t, f in zip(testcases, functionals)

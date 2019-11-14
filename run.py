@@ -14,7 +14,7 @@ FUNCTIONALS = "tested_functionals"
 
 def main():
 
-    config = {"tmp": fdrsp.TmpDir(), "functional_file": FUNCTIONALS}
+    config = {"tmp": "sample_tests", "functional_file": FUNCTIONALS}
 
     args = parse_input()
 
@@ -22,7 +22,7 @@ def main():
 
     save_selected_functionals(args)
 
-    generate_test_files(**config)
+    # generate_test_files(**config)
 
     logs = run_tests(**config)
 
@@ -43,7 +43,8 @@ def parse_input():
         "-f", "--file", help="Exchange-correlation functionals"
     )
     parser.add_argument(
-        "-v", "--view", action='store_true', help="View logs summary in browser"
+        "-v", "--view", action="store_true",
+        help="View logs summary in browser"
     )
 
     args = parser.parse_args()
@@ -57,7 +58,7 @@ def assert_dalton():
 
 
 def save_selected_functionals(args):
-    with open(FUNCTIONALS, 'w') as funcs:
+    with open(FUNCTIONALS, "w") as funcs:
         if args.file:
             with open(args.file) as f:
                 funcs.write(f.read())
@@ -76,7 +77,7 @@ def run_tests(**config):
     tests = glob.glob(os.path.join(config["tmp"], "test_findif*.py"))
     logs = [os.path.splitext(test)[0] + ".log" for test in tests]
     for test, log in zip(tests, logs):
-        pytest.main([test, "-v", "--resultlog", log])
+        pytest.main([test, "-v", "--junit-xml", log])
     return logs
 
 
@@ -86,7 +87,8 @@ def view_logs(**config):
         os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
         os.path.join(config["tmp"], "data"),
     )
-    webbrowser.open_new_tab(os.path.join(config['tmp'], 'test_findif.html'))
+    webbrowser.open_new_tab(os.path.join(config["tmp"], "test_findif.html"))
+
 
 if __name__ == "__main__":
     sys.exit(main())
