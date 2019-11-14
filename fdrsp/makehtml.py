@@ -12,9 +12,8 @@ def main(*logfiles, **config):
     tmp = config["tmp"]
 
     header = ["Functional"] + [
-        '<a href="%s">%s</a>' % (
-            file_to_html(log), short(log)
-        ) for log in logfiles
+        f'<a href="{file_to_html(log)}">{short(log)}</a>'
+        for log in logfiles
     ]
 
     with open(os.path.join(tmp, "index.html"), "w") as htmlfile:
@@ -22,9 +21,11 @@ def main(*logfiles, **config):
             "Dalton testing", "Finite field tests of DFT response functions"
             )
         )
-        htmlfile.write("Calculated at %s <br>" % str(datetime.datetime.now()))
+        now = datetime.datetime.now()
+        htmlfile.write(f"Calculated at {now} <br>")
         with open(root(logfiles[0]) + ".d/HF.out") as hfout:
-            htmlfile.write("Git revision: %s<br>" % get_git_revision(hfout))
+            git_revision = get_git_revision(hfout)
+            htmlfile.write(f"Git revision: {git_revision}<br>")
         df = collect_status_table_pt(*logfiles, **config)
         df.columns = header[1:]
         htmlfile.write(df.to_html(classes="table table-striped", escape=False))
@@ -61,7 +62,7 @@ def short(log):
 
 
 def html_head(h1="", h2="", container=""):
-    return """
+    return f"""
 <!DOCTYPE html>
 <html>
   <head>
@@ -73,14 +74,10 @@ def html_head(h1="", h2="", container=""):
 
   </head>
   <body>
-      <div class="container%s">
-          <h1>%s</h1>
-          <h2>%s</h2>
-""" % (
-        container,
-        h1,
-        h2,
-    )
+      <div class="container{container}">
+          <h1>{h1}</h1>
+          <h2>{h2}</h2>
+"""
 
 
 def root(path):
@@ -159,8 +156,6 @@ def files_to_html(*fnames):
 
 
 def get_functional(logline):
-    import re
-
     return re.match(r".*\[([\w/]+\*?)\].*", logline).group(1)
 
 
