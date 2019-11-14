@@ -1,4 +1,5 @@
 import mock
+import tempfile
 
 import pandas as pd
 import pandas.util.testing as pdt
@@ -64,8 +65,9 @@ def test_collect_status_column_pt(mock_to_html):
         </testsuite>
     </testsuites>
 """
-    with open('log_lines', 'w') as f:
+    with tempfile.NamedTemporaryFile('w', delete=False) as f:
         f.write(log_lines)
+    status = fm.collect_status_column_pt(f.name, tmp='...')
 
     ref_status = pd.Series(
             ['<a href="test_findif_ev_closed_singlet.d/HF.out.html" style="color: green;">PASSED</a>',
@@ -74,8 +76,6 @@ def test_collect_status_column_pt(mock_to_html):
          ],
         index=["HF", "slater", "b3lyp"]
     )
-
-    status = fm.collect_status_column_pt('log_lines', tmp='...')
 
     pdt.assert_series_equal(status, ref_status)
     mock_to_html.assert_has_calls([
