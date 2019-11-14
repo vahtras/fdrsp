@@ -68,9 +68,9 @@ def test_collect_status_column_pt(mock_to_html):
         f.write(log_lines)
 
     ref_status = pd.Series(
-        ['<a href="test_findif_ev_closed_singlet.d/HF.out.html">PASSED</a>',
-         '<a href="test_findif_ev_closed_singlet.d/slater.out.html">PASSED</a>',
-         '<a href="test_findif_ev_closed_singlet.d/b3lyp.out.html">FAILED</a>'
+            ['<a href="test_findif_ev_closed_singlet.d/HF.out.html" style="color: green;">PASSED</a>',
+         '<a href="test_findif_ev_closed_singlet.d/slater.out.html" style="color: green;">PASSED</a>',
+         '<a href="test_findif_ev_closed_singlet.d/b3lyp.out.html" style="color: red;">FAILED</a>'
          ],
         index=["HF", "slater", "b3lyp"]
     )

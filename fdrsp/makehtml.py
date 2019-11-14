@@ -17,7 +17,7 @@ def main(*logfiles, **config):
         ) for log in logfiles
     ]
 
-    with open(os.path.join(tmp, "test_findif.html"), "w") as htmlfile:
+    with open(os.path.join(tmp, "index.html"), "w") as htmlfile:
         htmlfile.write(html_head(
             "Dalton testing", "Finite field tests of DFT response functions"
             )

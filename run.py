@@ -87,7 +87,7 @@ def view_logs(**config):
     #     os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
     #     os.path.join(config["tmp"], "data"),
     # )
-    webbrowser.open_new_tab(os.path.join(config["tmp"], "test_findif.html"))
+    webbrowser.open_new_tab(os.path.join(config["tmp"], "index.html"))
 
 
 if __name__ == "__main__":
