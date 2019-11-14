@@ -127,8 +127,9 @@ def collect_status_column_pt(log, **config):
     ]
     generate_outputs_side_by_side_as_html(*outputs, **config)
     outputs_html = [o + ".html" for o in outputs]
+    colors = {'PASSED': 'green', 'FAILED': 'red'}
     status = [
-        '<a href="%s">%s</a>' % (o, s)
+        f'<a href="{o}" style="color: {colors[s]};">{s}</a>'
         for o, s in zip(outputs_html, statuses)
     ]
     return pandas.Series(status, index=functionals)
