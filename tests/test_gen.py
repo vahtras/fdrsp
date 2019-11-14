@@ -14,7 +14,7 @@ def run_response(request):
     functional = request.param
     wf=dft(functional)
     dal=functional
-    escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o"], field='D', delta=0.001)).first() 
+    escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o"], field='D', delta=0.001)).first()
     ev = RspCalc('D', wf=wf, dal=dal, mol=inp["h2o"]).exe()
     return (escf, ev)
 """

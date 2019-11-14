@@ -21,33 +21,37 @@ class FinDif(object):
         """First finite-field derivative of object method exe"""
         delta = self.obj.delta
         exe = self.obj.exe
-        return  (1/delta) * (exe(0.5*delta) - exe(-0.5*delta))
+        return (1 / delta) * (exe(0.5 * delta) - exe(-0.5 * delta))
 
     def second(self):
         """Second finite-field derivative of object method exe"""
         delta = self.obj.delta
         exe = self.obj.exe
-        return  (4/delta**2) * (exe(0.5*delta) + exe(-0.5*delta)- 2*exe())
+        return (4 / delta ** 2) * (
+            exe(0.5 * delta) + exe(-0.5 * delta) - 2 * exe()
+        )
+
 
 class RspCalc(object):
     """Execute dalton LR"""
-    def __init__(self, *args, **kwargs):
-        self.parallel = kwargs.get('parallel', True)
 
-        self.wf = kwargs.get('wf', 'HF')
-        self.field = kwargs.get('field', None)
-        self.delta = kwargs.get('delta', 0)
+    def __init__(self, *args, **kwargs):
+        self.parallel = kwargs.get("parallel", True)
+
+        self.wf = kwargs.get("wf", "HF")
+        self.field = kwargs.get("field", None)
+        self.delta = kwargs.get("delta", 0)
 
         self.ops = args
-        self.triplet = kwargs.get('triplet', False)
-        self.aux = kwargs.get('aux', '#')
+        self.triplet = kwargs.get("triplet", False)
+        self.aux = kwargs.get("aux", "#")
 
-        self.dal = kwargs.get('dal', self.wf)
-        self.mol = kwargs.get('mol', None)
+        self.dal = kwargs.get("dal", self.wf)
+        self.mol = kwargs.get("mol", None)
 
     @property
     def _dal_(self):
-        return self.dal.split('\n')[-1].replace(' ', '_').replace('/', '_')
+        return self.dal.split("\n")[-1].replace(" ", "_").replace("/", "_")
 
     def exe(self, delta=None):
         """Method supporting optional differential parameter"""
@@ -55,10 +59,10 @@ class RspCalc(object):
         if self.mol is None:
             raise MolError
 
-        with open(self._dal_ + ".dal", 'w') as dalfile:
+        with open(self._dal_ + ".dal", "w") as dalfile:
             dalfile.write(self.dalinp(delta))
 
-        with open(self._dal_ + ".mol", 'w') as molfile:
+        with open(self._dal_ + ".mol", "w") as molfile:
             molfile.write(self.mol)
 
         self.run()
@@ -75,7 +79,10 @@ class RspCalc(object):
 %s
 %s
 **END OF DALTON
-""" % (self.wavinp(delta), self.rspinp())
+""" % (
+            self.wavinp(delta),
+            self.rspinp(),
+        )
         return _dalinp
 
     def wavinp(self, delta=None):
@@ -87,14 +94,17 @@ class RspCalc(object):
 .NOQCSCF
 .THRESHOLD
 1e-11
-%s""" % (self.wf, self.finite_field(delta))
-        return  _wavinp
+%s""" % (
+            self.wf,
+            self.finite_field(delta),
+        )
+        return _wavinp
 
     def finite_field(self, delta=None):
         """Finite field section of Dalton intput"""
 
         if self.field and delta:
-            ff_input = "*HAMILTON\n.FIELD\n%g\n%s"%(delta, self.field)
+            ff_input = "*HAMILTON\n.FIELD\n%g\n%s" % (delta, self.field)
         else:
             ff_input = "###"
         return ff_input
@@ -103,9 +113,12 @@ class RspCalc(object):
         """Response section of Daltin input"""
 
         if self.is_response():
-            _rspinp = """\
+            _rspinp = (
+                """\
 **RESPONSE
-%s""" % self.triplet_label()
+%s"""
+                % self.triplet_label()
+            )
         else:
             _rspinp = "###"
 
@@ -165,7 +178,9 @@ class RspCalc(object):
 .PROPRT
 %s
 .PROPRT
-%s""" % tuple(self.ops[:2])
+%s""" % tuple(
+            self.ops[:2]
+        )
         return _lrinp
 
     def qrinp(self):
@@ -179,7 +194,9 @@ class RspCalc(object):
 .BPROP
 %s
 .CPROP
-%s""" % tuple(self.ops[:3])
+%s""" % tuple(
+            self.ops[:3]
+        )
         if self.triplet:
             _qrinp += """
 .ISPABC
@@ -199,7 +216,9 @@ class RspCalc(object):
 .CPROP
 %s
 .DPROP
-%s""" % tuple(self.ops[:4])
+%s""" % tuple(
+            self.ops[:4]
+        )
         return _crinp
 
     def run(self):
@@ -215,18 +234,23 @@ class RspCalc(object):
         else:
             ncpu = 1
 
-        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (ncpu, self._dal_, self._dal_)
+        cmd = "dalton -N %d -d -t /tmp/ExpVal_%s %s" % (
+            ncpu,
+            self._dal_,
+            self._dal_,
+        )
         try:
-            with open('log', 'w') as log:
-                retval = subprocess.call(cmd, stdout=log, stderr=log, shell=True)
+            with open("log", "w") as log:
+                retval = subprocess.call(
+                    cmd, stdout=log, stderr=log, shell=True
+                )
             if retval == 0:
                 print("Dalton called OK")
             else:
-                raise OSError(open('log').read())
+                raise OSError(open("log").read())
         except OSError as error:
             print(error)
             raise
-
 
     def get_output(self):
         """Collect results from output files after successful calculation"""
@@ -245,7 +269,11 @@ class RspCalc(object):
                     result = last_float(line)
                     break
             elif rsp_order == 2:
-                if "@" in line and self.ops[0].split()[0] in line and self.ops[1].split()[0] in line:
+                if (
+                    "@" in line
+                    and self.ops[0].split()[0] in line
+                    and self.ops[1].split()[0] in line
+                ):
                     result = -last_float(line)
                     break
             elif rsp_order == 3:
@@ -257,13 +285,16 @@ class RspCalc(object):
                     result = last_float(line)
                     break
             else:
-                raise RuntimeError("Response order %d not implemented" % rsp_order)
+                raise RuntimeError(
+                    "Response order %d not implemented" % rsp_order
+                )
 
         if result is None or math.isnan(result):
             raise ValueError
 
         return result
 
+
 def last_float(line):
     """Return last element of line input as float"""
-    return float(line.split()[-1].replace('D', 'e'))
+    return float(line.split()[-1].replace("D", "e"))

@@ -1,5 +1,6 @@
 import os
 from . import TmpDir
+
 #
 # Finite field strength
 #
@@ -36,7 +37,10 @@ def setup_module():
     else:
         os.mkdir(suppdir)
     os.chdir(suppdir)
-""" % (rtol, rtol)
+""" % (
+    rtol,
+    rtol,
+)
 
 setup += """
 def dft(functional):
@@ -47,7 +51,10 @@ def dft(functional):
     else:
         return 'DFT\\n%%s' %% functional
 
-""" % (hfweight, 1-hfweight)
+""" % (
+    hfweight,
+    1 - hfweight,
+)
 
 generic_test = """
 def test_findif_generic(run_response):
@@ -60,12 +67,12 @@ def test_findif_generic(run_response):
 # Process all runtypes and functionals defined in input file
 #
 def process_pt(template, functionals, **config):
-    tmp = config.get('tmp', TmpDir())
+    tmp = config.get("tmp", TmpDir())
     quoted = ['"%s"' % f for f in functionals]
     for runtype in template:
         with open(
-            os.path.join(tmp, "test_findif_" + runtype + ".py"), 'w'
-                ) as runfile:
+            os.path.join(tmp, "test_findif_" + runtype + ".py"), "w"
+        ) as runfile:
             runfile.write(setup)
             runfile.write(template[runtype] % ", ".join(['"HF"'] + quoted))
             runfile.write(generic_test)

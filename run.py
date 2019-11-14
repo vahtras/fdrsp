@@ -43,8 +43,10 @@ def parse_input():
         "-f", "--file", help="Exchange-correlation functionals"
     )
     parser.add_argument(
-        "-v", "--view", action="store_true",
-        help="View logs summary in browser"
+        "-v",
+        "--view",
+        action="store_true",
+        help="View logs summary in browser",
     )
 
     args = parser.parse_args()

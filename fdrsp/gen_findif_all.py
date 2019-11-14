@@ -15,10 +15,10 @@ from .common_findif import delta, process_pt
 
 def main(*argv, **config):
     A, B, C, X, = argv
-    file_of_functionals = config['functional_file']
+    file_of_functionals = config["functional_file"]
 
     #
-    # Template for functional test calling findif module 
+    # Template for functional test calling findif module
     #
     templates_pt = generate_templates(A, B, C, X)
 
@@ -34,18 +34,19 @@ def main(*argv, **config):
 def generate_templates(A, B, C, X):
 
     templates_pt = {
-    "ev_closed_singlet": """
+        "ev_closed_singlet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
     wf=dft(functional)
     dal=functional
-    escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%g)).first() 
+    escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%g)).first()
     ev = RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
     return (escf, ev)
-""" % (X, delta, X),
-    #
-    "ev_open_singlet": """
+"""
+        % (X, delta, X),
+        #
+        "ev_open_singlet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -54,9 +55,10 @@ def run_response(request):
     escf = FinDif(RspCalc(wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
     ev = RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o+"]).exe()
     return (escf, ev)
-""" % (X, delta, X),
-    #
-    "lr_closed_singlet":  """
+"""
+        % (X, delta, X),
+        #
+        "lr_closed_singlet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -65,9 +67,10 @@ def run_response(request):
     ev = FinDif(RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
     lr = RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
     return (ev, lr)
-""" % (A, X, delta, A, X),
-    #
-    "lr_open_singlet": """
+"""
+        % (A, X, delta, A, X),
+        #
+        "lr_open_singlet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -76,9 +79,10 @@ def run_response(request):
     ev = FinDif(RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
     lr = RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o+"]).exe()
     return (ev, lr)
-""" % (A, X, delta, A, X),
-    #
-    "lr_open_triplet": """
+"""
+        % (A, X, delta, A, X),
+        #
+        "lr_open_triplet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -87,9 +91,10 @@ def run_response(request):
     ev = FinDif(RspCalc('%s', wf=wf, dal=dal, mol=inp["h2o+"], triplet=True, field='%s', delta=%f)).first() 
     lr = RspCalc('%s 1', '%s', wf=wf, dal=dal, mol=inp["h2o+"], triplet=False).exe()
     return (ev, lr)
-""" % (A, X, delta, A, X),
-    #
-    "qr_closed_singlet": """
+"""
+        % (A, X, delta, A, X),
+        #
+        "qr_closed_singlet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -98,9 +103,10 @@ def run_response(request):
     lr = FinDif(RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
     qr = RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
     return (lr, qr)
-""" % (A, B, X, delta, A, B, X),
-    #
-    "qr_closed_triplet": """
+"""
+        % (A, B, X, delta, A, B, X),
+        #
+        "qr_closed_triplet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -109,9 +115,10 @@ def run_response(request):
     lr = FinDif(RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], triplet=True, field='%s', delta=%f)).first() 
     qr = RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], triplet=True, aux=".ISPABC\\n 1 1 0").exe()
     return (lr, qr)
-""" % (A, B, X, delta, A, B, X),
-    #
-    "qr_open_singlet": """
+"""
+        % (A, B, X, delta, A, B, X),
+        #
+        "qr_open_singlet": """
 @pytest.fixture(params=[%%s])
 def run_response(request):
     functional = request.param
@@ -120,9 +127,10 @@ def run_response(request):
     lr = FinDif(RspCalc('%s', '%s', wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
     qr = RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o+"], parallel=False).exe()
     return (lr, qr)
-""" % (A, B, X, delta, A, B, X),
-    #
-    "qr_open_triplet": """
+"""
+        % (A, B, X, delta, A, B, X),
+        #
+        "qr_open_triplet": """
 @pytest.fixture(params=[%s])
 def run_response(request):
     functional = request.param
@@ -131,9 +139,10 @@ def run_response(request):
     lr = FinDif(RspCalc('%s', '%s 1', wf=wf, dal=dal, mol=inp["h2o+"], field='%s', delta=%f)).first() 
     qr = RspCalc('%s', '%s 1', '%s', wf=wf, dal=dal, mol=inp["h2o+"], parallel=False).exe()
     return (lr, qr)
-""" % ("%s", A, B, X, delta, A, B, X),
-    #
-    "cr_closed_singlet": """
+"""
+        % ("%s", A, B, X, delta, A, B, X),
+        #
+        "cr_closed_singlet": """
 @pytest.fixture(params=[%s])
 def run_response(request):
     functional = request.param
@@ -142,10 +151,12 @@ def run_response(request):
     qr = FinDif(RspCalc('%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"], field='%s', delta=%f)).first() 
     cr = RspCalc('%s', '%s', '%s', '%s', wf=wf, dal=dal, mol=inp["h2o"]).exe()
     return (qr, cr)
-""" % ("%s", A, B, C, X, delta, A, B, C, X)
+"""
+        % ("%s", A, B, C, X, delta, A, B, C, X),
     }
 
     return templates_pt
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
