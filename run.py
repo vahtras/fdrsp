@@ -25,7 +25,7 @@ def main():
 
     fdrsp.html(*logs, **config)
 
-    if args.view:
+    if not args.no_view:
         view_logs(**config)
 
 
@@ -40,10 +40,10 @@ def parse_input():
         "-f", "--file", help="Exchange-correlation functionals"
     )
     parser.add_argument(
-        "-v",
-        "--view",
+        "-n",
+        "--no-view",
         action="store_true",
-        help="View logs summary in browser",
+        help="Do not open results in browser",
     )
 
     args = parser.parse_args()
