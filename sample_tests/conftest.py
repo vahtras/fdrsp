@@ -8,8 +8,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture
 def suppdir():
-    n, e = os.path.splitext(__file__)
-    suppdir = n + ".d"
+    suppdir = 'sample_tests'
     if not os.path.isdir(suppdir):
         os.mkdir(suppdir)
     os.chdir(suppdir)

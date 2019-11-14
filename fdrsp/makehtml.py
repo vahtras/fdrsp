@@ -50,7 +50,7 @@ def file_to_html(fname):
         html.write(open(fname).read())
         html.write("</pre>")
         html.write(html_tail())
-    return hname
+    return os.path.basename(hname)
 
 
 def short(log):

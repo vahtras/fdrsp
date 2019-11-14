@@ -83,10 +83,10 @@ def run_tests(**config):
 
 def view_logs(**config):
     # copy stylefiles
-    shutil.copytree(
-        os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
-        os.path.join(config["tmp"], "data"),
-    )
+    # shutil.copytree(
+    #     os.path.join(os.path.dirname(os.path.abspath(fdrsp.__file__)), "data"),
+    #     os.path.join(config["tmp"], "data"),
+    # )
     webbrowser.open_new_tab(os.path.join(config["tmp"], "test_findif.html"))
 
 
