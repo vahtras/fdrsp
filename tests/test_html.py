@@ -62,6 +62,18 @@ def test_collect_status_column_pt(mock_to_html):
                     Target diff 0.0009706201900000001
                 </system-out>
             </testcase>
+            <testcase classname="dev.py.fdrsp.sample_tests.test_findif_ev_closed_singlet" file="dev/py/fdrsp/sample_tests/test_findif_ev_closed_singlet.py" line="9" name="test_run_response[rpbex]" time="0.954">
+                <failure message="...SEVERE ERROR...">
+                </failure>
+                <system-out>Dalton called OK
+                    Dalton called OK
+                    Dalton called OK
+                    Numerical  -0.9706091749990264
+                    Analytical -0.97061019
+                    Difference  1.0150009736031862e-06
+                    Target diff 0.0009706201900000001
+                </system-out>
+            </testcase>
         </testsuite>
     </testsuites>
 """
@@ -70,11 +82,12 @@ def test_collect_status_column_pt(mock_to_html):
     status = fm.collect_status_column_pt(f.name, tmp='...')
 
     ref_status = pd.Series(
-            ['<a href="test_findif_ev_closed_singlet.d/HF.out.html" style="color: green;">PASSED</a>',
+         ['<a href="test_findif_ev_closed_singlet.d/HF.out.html" style="color: green;">PASSED</a>',
          '<a href="test_findif_ev_closed_singlet.d/slater.out.html" style="color: green;">PASSED</a>',
-         '<a href="test_findif_ev_closed_singlet.d/b3lyp.out.html" style="color: red;">FAILED</a>'
+         '<a href="test_findif_ev_closed_singlet.d/b3lyp.out.html" style="color: red;">FAILED</a>',
+         '<a href="test_findif_ev_closed_singlet.d/rpbex.out.html" style="color: yellow;">ERROR</a>',
          ],
-        index=["HF", "slater", "b3lyp"]
+        index=["HF", "slater", "b3lyp", "rpbex"]
     )
 
     pdt.assert_series_equal(status, ref_status)

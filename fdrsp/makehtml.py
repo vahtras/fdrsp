@@ -108,10 +108,12 @@ def collect_status_column_pt(log, **config):
     functionals = []
     for testsuite in testsuites:
         for testcase in testsuite:
-            if 'error' in testcase.attrib:
-                status = 'ERROR'
-            elif 'failure' in [t.tag for t in testcase]:
-                status = 'FAILED'
+            attributes = {t.tag: t.attrib for t in testcase}
+            if 'failure' in attributes:
+                if 'ERROR' in attributes['failure']['message']:
+                    status = 'ERROR'
+                else:
+                    status = 'FAILED'
             else:
                 status = 'PASSED'
             statuses.append(status)
@@ -124,7 +126,7 @@ def collect_status_column_pt(log, **config):
     ]
     generate_outputs_side_by_side_as_html(*outputs, **config)
     outputs_html = [o + ".html" for o in outputs]
-    colors = {'PASSED': 'green', 'FAILED': 'red'}
+    colors = {'PASSED': 'green', 'FAILED': 'red', 'ERROR': 'yellow'}
     status = [
         f'<a href="{o}" style="color: {colors[s]};">{s}</a>'
         for o, s in zip(outputs_html, statuses)
