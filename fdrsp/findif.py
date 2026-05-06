@@ -36,7 +36,7 @@ class RspCalc(object):
     """Execute dalton LR"""
 
     def __init__(self, *args, **kwargs):
-        self.parallel = kwargs.get("parallel", True)
+        self.parallel = kwargs.get("parallel", False)
 
         self.wf = kwargs.get("wf", "HF")
         self.field = kwargs.get("field", None)

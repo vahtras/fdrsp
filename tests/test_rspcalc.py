@@ -10,7 +10,7 @@ from fdrsp.errors import MolError
 
 def test_z_setup():
     zcalc = RspCalc("ZDIPLEN")
-    assert zcalc.parallel
+    assert not zcalc.parallel
     assert zcalc.wf == 'HF'
     assert zcalc.delta == 0
     assert zcalc.ops == ("ZDIPLEN",)
@@ -225,7 +225,7 @@ def test_dal_under():
 def test_call(mock_call, mock_open, mock_cpu_count):
     calc = RspCalc(wf='yo', mol='yo')
 
-    mock_cpu_count.return_value = 8
+    calc.parallel = False
     mock_call.return_value = 0
     mock_file = mock.MagicMock()
     mock_open().__enter__.return_value = mock_file
@@ -233,7 +233,7 @@ def test_call(mock_call, mock_open, mock_cpu_count):
     calc.run()
 
     mock_call.assert_called_once_with(
-        'dalton -N 8 -d -t /tmp/ExpVal_yo yo',
+        'dalton -N 1 -d -t /tmp/ExpVal_yo yo',
         stdout=mock_file, stderr=mock_file, shell=True)
 
 
