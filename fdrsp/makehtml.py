@@ -5,7 +5,7 @@ import os
 import datetime
 import pandas
 
-pandas.set_option("display.max_colwidth", -1)
+pandas.set_option("display.max_colwidth", None)
 
 
 def main(*logfiles, **config):

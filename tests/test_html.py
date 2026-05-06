@@ -1,8 +1,8 @@
-import mock
+from unittest import mock
 import tempfile
 
 import pandas as pd
-import pandas.util.testing as pdt
+import pandas.testing as pdt
 
 import fdrsp.makehtml as fm
 

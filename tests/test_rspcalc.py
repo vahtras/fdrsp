@@ -1,7 +1,7 @@
 """Pytest style tests for findif module"""
 
 import pytest
-import mock
+from unittest import mock
 
 from . import fdrsp
 from fdrsp.findif import RspCalc, last_float
