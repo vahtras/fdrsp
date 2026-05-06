@@ -37,6 +37,7 @@ dependencies = [
 dev = [
     { name = "pandas" },
     { name = "pytest" },
+    { name = "pytest-xdist" },
 ]
 
 [package.metadata]
@@ -46,6 +47,7 @@ requires-dist = [{ name = "pytest-xdist", specifier = ">=3.8.0" }]
 dev = [
     { name = "pandas", specifier = ">=3.0.2" },
     { name = "pytest", specifier = ">=9.0.3" },
+    { name = "pytest-xdist", specifier = ">=3.8.0" },
 ]
 
 [[package]]

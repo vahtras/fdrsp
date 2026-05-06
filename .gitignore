@@ -16,3 +16,4 @@ build
 *.png
 .coverage
 htmlcov
+.envrc
